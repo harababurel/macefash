@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
 from functools import wraps
+from settings import SETTINGS
 from subprocess import Popen, PIPE
 from random import randint, choice, sample, shuffle
 from redirectSolver import solveRedirect
@@ -13,7 +14,7 @@ basePic = 'https://graph.facebook.com/%s/picture?width=%s&height=%s'
 
 """ AUTH SHIT """
 def checkAuth(username, password):
-    return (username, password) in [('schioara', 'oarba')] #this should probably be moved to the db in the future
+    return (username, password) in SETTINGS['auth']
 
 def requiresAuth(f):
     @wraps(f)

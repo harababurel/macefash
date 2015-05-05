@@ -1,5 +1,6 @@
 from __init__ import app, db
 
+
 class Person(db.Model):
     __tablename__ = "persons"
 
@@ -33,6 +34,7 @@ class Person(db.Model):
     def __repr__(self):
         return self.username
 
+
 class Vote(db.Model):
     __tablename__ = 'votes'
 
@@ -53,6 +55,7 @@ class Vote(db.Model):
     def __repr__(self):
         return "%s rolled (%i, %i) and voted for %i" (self.ip, self.firstOption, self.secondOption, self.winner)
 
+
 class Message(db.Model):
     __tablename__ = 'messages'
 
@@ -71,6 +74,7 @@ class Message(db.Model):
     def __repr__(self):
         return "%s (ip = %s) wrote: %s" % (self.name, self.ip, self.message)
 
+
 class Theme(db.Model):
     __tablename__ = 'themes'
 
@@ -84,6 +88,7 @@ class Theme(db.Model):
 
     def __repr__(self):
         return "themeName: <%s>" % self.name
+
 
 class UserSettings(db.Model):
     __tablename__ = 'usersettings'
