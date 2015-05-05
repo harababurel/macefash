@@ -1,4 +1,9 @@
+"""
+Defines the models upon which
+the database tables are based.
+"""
 from app import db
+
 
 class Person(db.Model):
     __tablename__ = "person"
@@ -18,7 +23,19 @@ class Person(db.Model):
 
     hidden = db.Column(db.Boolean, unique=False, nullable=True)
 
-    def __init__(self, username, gender=None, city=None, school=None, rating=1500, maxRating=1500, kFactor=40, games=0, wins=0, hidden=False):
+    def __init__(
+            self,
+            username,
+            gender=None,
+            city=None,
+            school=None,
+            rating=1500,
+            maxRating=1500,
+            kFactor=40,
+            games=0,
+            wins=0,
+            hidden=False
+            ):
         self.username = username
         self.gender = gender
         self.city = city
@@ -45,12 +62,12 @@ class Vote(db.Model):
 
     def __init__(self, ip, winner, loser, when):
         self.ip = ip
-        self.winner =  winner
+        self.winner = winner
         self.loser = loser
         self.when = when
 
     def __repr__(self):
-        return "%s voted (%i, %i) at %s" (self.ip, self.winner, self.loser, self.when)
+        return "%s voted (%i, %i) at %s" % (self.ip, self.winner, self.loser, self.when)
 
 
 class Message(db.Model):
@@ -97,7 +114,7 @@ class Preference(db.Model):
     def __init__(self, ip, theme=None, gender=None):
         self.ip = ip
         self.theme = theme if theme is not None else "Standard"
-        self.gender = gender if gender is not None else False #aka gurls
+        self.gender = gender if gender is not None else False
 
     def __repr__(self):
         return "ip %s wants:\n---> theme: <%s>\n---> gender: %r" % (self.ip, self.theme, self.gender)

@@ -1,6 +1,7 @@
 import urlparse
 import httplib
 
+
 def solveRedirect(url, depth=0):
     """
     Facebook API provides a URL for acquiring profile pictures.
@@ -21,6 +22,6 @@ def solveRedirect(url, depth=0):
     res = conn.getresponse()
     headers = dict(res.getheaders())
 
-    if headers.has_key('location') and headers['location'] != url:
+    if 'location' in headers and headers['location'] != url:
         return solveRedirect(headers['location'], depth+1)
     return url

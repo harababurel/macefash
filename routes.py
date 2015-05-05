@@ -1,4 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash, Response
+"""
+This module links the URLs to the corresponding templates.
+Also contains most of the project's functionality.
+"""
+from flask import Flask, render_template, redirect, url_for, \
+                  request, session, flash, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
 from functools import wraps
@@ -14,28 +19,41 @@ import os
 basePic = 'https://graph.facebook.com/%s/picture?width=%s&height=%s'
 
 
-""" AUTH SHIT """
 def checkAuth(username, password):
     return (username, password) in SETTINGS['auth']
 
 
 def requiresAuth(f):
+    """
+    Function only allows access on certain pages (marked with the decorator)
+    for users who have the user:pass specified in the settings.py module
+    """
     @wraps(f)
     def decorated(*args, **kwargs):
         auth = request.authorization
         if not auth or not checkAuth(auth.username, auth.password):
-            return Response('sorry, can\'t let you in :-(\n', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+            return Response(
+                    'sorry, can\'t let you in :-(\n',
+                    401,
+                    {'WWW-Authenticate': 'Basic realm="Login Required"'}
+                    )
         return f(*args, **kwargs)
     return decorated
-""" /AUTH SHIT """
 
 
 def sh(script):
+    """
+    Can run a bash script.
+    Not used, for the moment.
+    """
     (out, err) = Popen(list(script.split()), stdout=PIPE).communicate()
     return str(out)
 
 
 def getIP():
+    """
+    'unknown' serves as a universal IP :D
+    """
     ip = request.headers.get('X-Real-IP')
     if ip is None:
         ip = 'unknown'
@@ -66,10 +84,14 @@ def getCurrentGender():
 
 
 def getGenderCount(gender):
-    return len(Person.query.filter_by(gender=gender).all())
+    return len(Person.query.filter(Person.gender == gender).all())
 
 
 def updateRatings(A, B):
+    """
+    Elo rating system.
+    kFactor values similar to the ones used by FIDE.
+    """
     A = db.session.query(Person).get(A)
     B = db.session.query(Person).get(B)
 
@@ -84,7 +106,7 @@ def updateRatings(A, B):
 
     print "new rating for <%s>: %i (delta: %i)\nnew rating for <%s>: %i (delta: %i)" % (A.username, newA, deltaA, B.username, newB, deltaB)
 
-    #other stats
+    # update all relevant stats
     A.rating, B.rating = newA, newB
     A.maxRating, B.maxRating = max(A.maxRating, A.rating), max(B.maxRating, B.rating)
     A.games, B.games = A.games + 1, B.games + 1
@@ -111,8 +133,7 @@ def home():
         updateRatings(A, B)
         return redirect(url_for('home'))
 
-
-    L, R = sample([x for x in db.session.query(Person).filter(Person.gender==getCurrentGender() and Person.hidden==False).all()], 2)
+    L, R = sample(list(db.session.query(Person).filter(Person.gender == getCurrentGender() and not Person.hidden).all()), 2)
 
     picL = solveRedirect(basePic % (L.username, 500, 500))
     picR = solveRedirect(basePic % (R.username, 500, 500))
@@ -167,9 +188,9 @@ def setGender(gender):
 @requiresAuth
 def genderHelp():
     try:
-        remaining = [x for x in db.session.query(Person).filter(and_(Person.gender==None, Person.hidden==False)).all()]
+        remaining = list(db.session.query(Person).filter(and_(Person.gender is None, not Person.hidden)).all())
         entry = choice(remaining)
-        #entry = db.session.query(Person).filter(and_(Person.gender==None, Person.hidden==False)).first() #by id
+        # entry = db.session.query(Person).filter(and_(Person.gender==None, Person.hidden==False)).first() #by id
     except:
         print "no more genders to classify (probably)"
         return redirect(url_for('home'))
@@ -208,9 +229,9 @@ def classifyGender(username=None, newGender=None):
 
     if newGender is not None:
         if newGender == 3:
-            db.session.query(Person).filter_by(username=username).first().hidden = True
+            db.session.query(Person).filter(Person.username == username).first().hidden = True
         else:
-            db.session.query(Person).filter_by(username=username).first().gender = [False, True, None][newGender]
+            db.session.query(Person).filter(Person.username == username).first().gender = [False, True, None][newGender]
 
     db.session.commit()
     return redirect(url_for('genderHelp'))
@@ -220,12 +241,13 @@ def classifyGender(username=None, newGender=None):
 @app.route('/all/<int:page>')
 @requiresAuth
 def showAll(page=None):
-    if page is None: page = 1
+    if page is None:
+        page = 1
     onPage = 40
 
     entries = db.session.query(Person).all()
-    entries = sorted(entries, key = lambda x: x.rating, reverse = True)
-    #shuffle(entries)
+    entries = sorted(entries, key=lambda x: x.rating, reverse=True)
+    # shuffle(entries)
     pages = len(entries) // onPage + (len(entries) % onPage != 0)
     firstNav, lastNav = max(1, page-3), min(page+3, pages)
     shownEntries = entries[(page-1)*onPage: min(len(entries), page*onPage)]
@@ -255,4 +277,3 @@ def pageNotFound(e):
             boys=getGenderCount(True),
             ungendered=getGenderCount(None)
             ), 404
-
