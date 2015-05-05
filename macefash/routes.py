@@ -16,6 +16,7 @@ basePic = 'https://graph.facebook.com/%s/picture?width=%s&height=%s'
 def checkAuth(username, password):
     return (username, password) in SETTINGS['auth']
 
+
 def requiresAuth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -26,9 +27,11 @@ def requiresAuth(f):
     return decorated
 """ /AUTH SHIT """
 
+
 def sh(script):
     (out, err) = Popen(list(script.split()), stdout=PIPE).communicate()
     return str(out)
+
 
 def getIP():
     ip = request.headers.get('X-Real-IP')
@@ -36,8 +39,10 @@ def getIP():
         ip = 'unknown'
     return ip
 
+
 def getThemes():
     return sorted(db.session.query(Theme).all(), key=lambda x: x.name)
+
 
 def getCurrentTheme():
     try:
@@ -49,6 +54,7 @@ def getCurrentTheme():
 
     return (themeName, themeURL)
 
+
 def getCurrentGender():
     try:
         currentGender = UserSettings.query.filter_by(ip=getIP()).first().gender
@@ -56,8 +62,10 @@ def getCurrentGender():
         currentGender = False
     return currentGender
 
+
 def getGenderCount(gender):
     return len(Person.query.filter_by(gender=gender).all())
+
 
 def updateRatings(A, B):
     A = db.session.query(Person).get(A)
@@ -87,6 +95,7 @@ def updateRatings(A, B):
             X.kFactor = 10
 
     db.session.commit()
+
 
 @app.route('/', methods=['GET', 'POST'])
 @requiresAuth
@@ -122,6 +131,7 @@ def home():
             userIP=getIP()
             )
 
+
 @app.route('/setTheme/<string:theme>')
 def setTheme(theme):
     currentUser = UserSettings.query.filter_by(ip=getIP()).first()
@@ -134,6 +144,7 @@ def setTheme(theme):
 
     db.session.commit()
     return redirect(url_for('home'))
+
 
 @app.route('/setGender/<int:gender>')
 def setGender(gender):
@@ -148,6 +159,7 @@ def setGender(gender):
 
     db.session.commit()
     return redirect(url_for('home'))
+
 
 @app.route('/genderHelp')
 @requiresAuth
@@ -183,6 +195,7 @@ def genderHelp():
             percentage=percentage
             )
 
+
 @app.route('/classifyGender/<string:username>')
 @app.route('/classifyGender/<string:username>/<int:newGender>')
 @requiresAuth
@@ -199,6 +212,7 @@ def classifyGender(username=None, newGender=None):
 
     db.session.commit()
     return redirect(url_for('genderHelp'))
+
 
 @app.route('/all')
 @app.route('/all/<int:page>')
@@ -227,6 +241,7 @@ def showAll(page=None):
             boys=getGenderCount(True),
             ungendered=getGenderCount(None)
             )
+
 
 @app.errorhandler(404)
 def pageNotFound(e):
