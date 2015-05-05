@@ -8,3 +8,5 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
 db = SQLAlchemy(app)
 from models import *
+
+import generateData

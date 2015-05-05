@@ -1,6 +1,5 @@
 from __init__ import app, db
 
-
 class Person(db.Model):
     __tablename__ = "persons"
 
