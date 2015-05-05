@@ -1,3 +1,9 @@
-macefash/app.db
-macefash/settings.py
-databaseSample/app.db
+app.db
+settings.py
+app.pyc
+databaseGenerator.pyc
+main.pyc
+models.pyc
+redirectSolver.pyc
+routes.pyc
+settings.pyc

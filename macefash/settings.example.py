@@ -1,3 +1,0 @@
-SETTINGS = {
-    'auth': [('cauciuc', 'dezosat')]
-}
