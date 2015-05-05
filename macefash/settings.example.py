@@ -1,3 +1,3 @@
 SETTINGS = {
-    'auth': [('schioara', 'oarba')]
+    'auth': [('cauciuc', 'dezosat')]
 }

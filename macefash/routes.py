@@ -40,15 +40,21 @@ def getThemes():
     return sorted(db.session.query(Theme).all(), key=lambda x: x.name)
 
 def getCurrentTheme():
-    themeName = UserSettings.query.filter_by(ip=getIP()).first()
-    themeName = themeName.theme if themeName is not None else "United"
-    themeURL = Theme.query.filter_by(name=themeName).first().source
+    try:
+        themeName = UserSettings.query.filter_by(ip=getIP()).first()
+        themeURL = Theme.query.filter_by(name=themeName).first().source
+    except:
+        themeName = 'United'
+        themeURL = 'http://bootswatch.com/united/bootstrap.min.css'
 
     return (themeName, themeURL)
 
 def getCurrentGender():
-    currentGender = UserSettings.query.filter_by(ip=getIP()).first()
-    return currentGender.gender if currentGender is not None else False
+    try:
+        currentGender = UserSettings.query.filter_by(ip=getIP()).first().gender
+    except:
+        currentGender = False
+    return currentGender
 
 def getGenderCount(gender):
     return len(Person.query.filter_by(gender=gender).all())
@@ -83,12 +89,13 @@ def updateRatings(A, B):
     db.session.commit()
 
 @app.route('/', methods=['GET', 'POST'])
+@requiresAuth
 def home():
     global basePic
 
     if request.method == 'POST':
         A, B = int(request.form['winner']), int(request.form['loser'])
-        print "voted for <%i> instead of <%i>" % (A, B)
+        print "user <%s> voted for <%i> instead of <%i>" % (getIP(), A, B)
 
         updateRatings(A, B)
         return redirect(url_for('home'))
@@ -201,6 +208,7 @@ def showAll(page=None):
     onPage = 40
 
     entries = db.session.query(Person).all()
+    entries = sorted(entries, key = lambda x: x.rating, reverse = True)
     #shuffle(entries)
     pages = len(entries) // onPage + (len(entries) % onPage != 0)
     firstNav, lastNav = max(1, page-3), min(page+3, pages)
