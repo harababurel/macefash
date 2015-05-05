@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block homeActive  %}{% endblock %}
+{% block topActive  %}{% endblock %}
+{% block aboutActive  %}{% endblock %}
+
+{% block title %}all{{ howMany }}{% endblock %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>username</th>
+      <th>gender</th>
+      <th>city</th>
+      <th>school</th>
+      <th>rating</th>
+      <th>maxRating</th>
+      <th>kFactor</th>
+      <th>games</th>
+      <th>wins</th>
+      <th>hidden</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in entries %}
+      <tr>
+        <td>{{ x.id }}</td>
+        <td><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.username }}/picture?width=300&height=300"></a></td>
+        <td>{{ x.gender }}</td>
+        <td>{{ x.city }}</td>
+        <td>{{ x.school }}</td>
+        <td>{{ x.rating }}</td>
+        <td>{{ x.maxRating }}</td>
+        <td>{{ x.kFactor }}</td>
+        <td>{{ x.games }}</td>
+        <td>{{ x.wins }}</td>
+        <td>{{ x.hidden }}</td>
+      </tr>
+   {% endfor %}
+  </tbody>
+</table>
+
+<div class="text-center">
+  <nav>
+    <ul class="pagination pagination-sm">
+      <li{% if page==1 %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showAll', page=1) }}" aria-label="first">
+          <span aria-hidden="true">first</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="pagination">
+      <li{% if page==1 %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showAll', page=page-1) }}" aria-label="previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      {% for i in range(firstNav, lastNav+1) %}
+      <li {% if i == page %}class="active"{% endif %}>
+        <a href="{{ url_for('showAll', page=i) }}">{{ i }}</a>
+      </li>
+      {% endfor %}
+
+      <li{% if page==pages %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showAll', page=page+1) }}" aria-label="next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="pagination pagination-sm">
+      <li{% if page==pages %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showAll', page=pages) }}" aria-label="last">
+          <span aria-hidden="true">last</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+{% endblock %}

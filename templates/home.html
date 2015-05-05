@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block topActive %}{% endblock %}
+{% block aboutActive %}{% endblock %}
+{% block title %}home{% endblock %}
+
+{% block content %}
+
+<h3>choose the one you like the most ;-)</h3>
+<!-- PICTURES ROW -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-5">
+            <p align="right"><span class="label label-primary">{{ L.rating }}</span></p>
+            <form action="{{ url_for('home') }}", method="POST">
+                <input type="hidden" name="winner" value="{{ L.id }}"></input>
+                <input type="hidden" name="loser" value="{{ R.id }}"></input>
+                <input type="image" action="submit" class="col-xs5 img-responsive pull-right thumbnail" src="{{ picL }}">
+            </form>
+        </div>
+
+        <div class="col-md-5">
+            <p align="left"><span class="label label-primary">{{ R.rating }}</span></p>
+            <form action="{{ url_for('home') }}", method="POST">
+                <input type="hidden" name="winner" value="{{ R.id }}"></input>
+                <input type="hidden" name="loser" value="{{ L.id }}"></input>
+                <input type="image" action="submit" class="col-xs5 img-responsive pull-left thumbnail" src="{{ picR }}">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

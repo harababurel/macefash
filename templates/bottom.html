@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block homeActive  %}{% endblock %}
+{% block topActive %}{% endblock %}
+{% block aboutActive %}{% endblock %}
+
+{% block title %}bottom{{ howMany }}{% endblock %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>pic</th>
+      <th>votes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in range(0, howMany) %}
+      <tr>
+        <td>{{ i+1 }}</td>
+        <td><img src="{{ entries[i].pic }}" height=200 width=200 class="thumbnail"></td>
+        <td>{{ entries[i].votes }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

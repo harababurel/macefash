@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}macefash{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ currentTheme[1] }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/bg.css') }}" rel="stylesheet" media="screen">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('home') }}">macefash <sup><span class="label label-default">Zal&#259;u</span></sup></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li {% block homeActive %}class="active"{% endblock %}><a href="{{ url_for('home') }}">vote<span class="sr-only">(current)</span></a></li>
+              <li {% block topActive %}class="active"{% endblock %}><a href="{{ url_for('home') }}">top15 </a></li>
+              <li {% block aboutActive %}class="active"{% endblock %}><a href="{{ url_for('home') }}">about</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">gender<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li{% if currentGender==False %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=0) }}">gurls ({{ girls }})</a></li>
+                  <li{% if currentGender==True %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=1) }}">bwoys ({{ boys }})</a></li>
+                  <li class="disabled"><a href="#">unknown ({{ ungendered }})</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">theme<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  {% for theme in themes %}<li{% if theme.name == currentTheme[0] %} class="active"{% endif %}><a href="{{ url_for('setTheme', theme=theme.name) }}">{{ theme.name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">admin<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{{ url_for('genderHelp') }}">help us identify genders</a></li>
+                  <li><a href="{{ url_for('showAll') }}">browse all entries</a></li>
+                </ul>
+              </li>
+              <p class="navbar-text"><span class="badge">{{ totalVotes if totalVotes else "no" }}</span> votes so far...{% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}</p>
+            </ul>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
+

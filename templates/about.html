@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}about{% endblock %}
+
+{% block homeActive %}{% endblock %}
+{% block topActive %}{% endblock %}
+
+
+{% block content %}
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <img class="img-responsive thumbnail" src="{{ url_for('static', filename='img/the_numbers_dont_define_you.png') }}">
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+        <h2>TO DO:</h2>
+    </div>
+    <div class="col-md-5">
+        <ul>
+            <li>ELO rating system
+            <ul>
+                <li>this will soon <strong>reset all votes</strong></li>
+                <li>it will also facilitate a significant database expansion :-D</li>
+            </ul>
+            </li>
+            <li>anti-spam measures</li>
+            <li>instant profile picture update - <strong>{{ "%.2f" % updatedPercentage }}&#37;</strong> done</li>
+            <li>username based entries</li>
+            <li>contact form for taking down unwanted pictures</li>
+        </ul>
+    </div>
+    <div class="col-md-8"></div>
+</div>
+
+{% endblock %}
