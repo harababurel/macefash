@@ -66,8 +66,8 @@ def getThemes():
 
 def getCurrentTheme():
     try:
-        themeName = Preference.query.filter_by(ip=getIP()).first()
-        themeURL = Theme.query.filter_by(name=themeName).first().source
+        themeName = Preference.query.filter(Preference.ip == getIP()).first()
+        themeURL = Theme.query.filter(Theme.name == themeName).first().source
     except:
         themeName = 'United'
         themeURL = 'http://bootswatch.com/united/bootstrap.min.css'
@@ -77,7 +77,7 @@ def getCurrentTheme():
 
 def getCurrentGender():
     try:
-        currentGender = Preference.query.filter_by(ip=getIP()).first().gender
+        currentGender = Preference.query.filter(Preference.ip == getIP()).first().gender
     except:
         currentGender = False
     return currentGender
@@ -133,7 +133,7 @@ def home():
         updateRatings(A, B)
         return redirect(url_for('home'))
 
-    L, R = sample(list(db.session.query(Person).filter(Person.gender == getCurrentGender() and not Person.hidden).all()), 2)
+    L, R = sample(list(db.session.query(Person).filter(and_(Person.gender == getCurrentGender(), Person.hidden == False)).all()), 2)
 
     picL = solveRedirect(basePic % (L.username, 500, 500))
     picR = solveRedirect(basePic % (R.username, 500, 500))
@@ -157,7 +157,7 @@ def home():
 
 @app.route('/setTheme/<string:theme>')
 def setTheme(theme):
-    currentUser = Preference.query.filter_by(ip=getIP()).first()
+    currentUser = Preference.query.filter(Preference.ip == getIP()).first()
     if currentUser is None:
         db.session.add(Preference(ip=getIP(), theme=theme))
         print "user %s selected theme <%s> for the first time" % (getIP(), theme)
@@ -172,7 +172,7 @@ def setTheme(theme):
 @app.route('/setGender/<int:gender>')
 def setGender(gender):
     gender = (gender == 1)
-    currentUser = Preference.query.filter_by(ip=getIP()).first()
+    currentUser = Preference.query.filter(Preference.ip == getIP()).first()
     if currentUser is None:
         db.session.add(Preference(ip=getIP(), gender=gender))
         print "user %s selected gender <%r> for the first time" % (getIP(), gender)
