@@ -220,6 +220,7 @@ def genderHelp():
             'genderclassifier.html',
             x=entry,
             pic=pic,
+            totalVotes=getTotalVotes(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
@@ -270,6 +271,7 @@ def showAll(page=None):
             pages=pages,
             firstNav=firstNav,
             lastNav=lastNav,
+            totalVotes=getTotalVotes(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
@@ -282,6 +284,7 @@ def showAll(page=None):
 def pageNotFound(e):
     return render_template(
             '404.html',
+            totalVotes=getTotalVotes(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
