@@ -83,6 +83,14 @@ def getCurrentGender():
     return currentGender
 
 
+def getTotalVotes():
+    try:
+        totalVotes = sum([x.wins for x in db.session.query(Person).filter(Person.hidden == False).all()])
+    except:
+        totalVotes = None
+    return totalVotes
+
+
 def getGenderCount(gender):
     return len(Person.query.filter(Person.gender == gender).all())
 
@@ -144,7 +152,7 @@ def home():
             R=R,
             picL=picL,
             picR=picR,
-            ip=getIP(),
+            totalVotes=getTotalVotes(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
