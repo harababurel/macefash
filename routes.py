@@ -66,8 +66,8 @@ def getThemes():
 
 def getCurrentTheme():
     try:
-        themeName = Preference.query.filter(Preference.ip == getIP()).first()
-        themeURL = Theme.query.filter(Theme.name == themeName).first().source
+        themeName = db.session.query(Preference).filter(Preference.ip == getIP()).first().theme
+        themeURL = db.session.query(Theme).filter(Theme.name == themeName).first().source
     except:
         themeName = 'United'
         themeURL = 'http://bootswatch.com/united/bootstrap.min.css'
