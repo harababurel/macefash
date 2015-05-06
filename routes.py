@@ -187,8 +187,11 @@ def setGender(gender):
 @app.route('/genderHelp')
 @requiresAuth
 def genderHelp():
+    """
+    note to self: and_(Person.gender is None, not Person.hidden) doesn't work
+    """
     try:
-        remaining = list(db.session.query(Person).filter(and_(Person.gender == None, not Person.hidden)).all())
+        remaining = list(db.session.query(Person).filter(and_(Person.gender == None, Person.hidden == False)).all())
         entry = choice(remaining)
         # entry = db.session.query(Person).filter(and_(Person.gender==None, Person.hidden==False)).first() #by id
     except:
