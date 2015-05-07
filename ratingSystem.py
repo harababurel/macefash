@@ -56,15 +56,19 @@ def processVote(form):
     print "user <%s> voted:\n    winner: <%s>\n    loser: <%s>" % (getIP(), players[0].username, players[1].username)
 
     newStats = {}
-    for currentPlayer in players:
-        newStats[currentPlayer] = getNewRatings(currentPlayer, players) # firstly, get new ratings (without altering anything)
 
+    # firstly, get new ratings (without altering anything)
     for currentPlayer in players:
-        currentPlayer.rating = newStats[currentPlayer]['newRating']     # secondly, update all ratings based on received values
+        newStats[currentPlayer] = getNewRatings(currentPlayer, players)
+
+    # secondly, update all ratings based on received values
+    for currentPlayer in players:
+        currentPlayer.rating = newStats[currentPlayer]['newRating']
         currentPlayer.volatility = newStats[currentPlayer]['newVolatility']
         currentPlayer.games += 1
         if currentPlayer == players[0]:
             currentPlayer.wins += 1
+        currentPlayer.maxRating = max(currentPlayer.maxRating, currentPlayer.rating)
 
     db.session.commit()
 

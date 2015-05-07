@@ -6,14 +6,18 @@
 
 {% block content %}
 
-<h3>choose the one you like the most ;-)</h3>
+<h3><center>choose the one you like the most ;-)</center></h3>
 <!-- PICTURES ROW -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1"></div>
 
         <div class="col-md-5">
-            <p align="right"><span class="label label-primary">{{ L.rating }}</span></p>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ L.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ (L.rating-500)/20 }}%; min-width: 2em; display:block; float: right;">
+                    <span>{{ L.rating }}</span>
+                </div>
+            </div>
             <form action="{{ url_for('home') }}", method="POST">
                 <input type="hidden" name="winner" value="{{ L.id }}"></input>
                 <input type="hidden" name="loser" value="{{ R.id }}"></input>
@@ -22,7 +26,11 @@
         </div>
 
         <div class="col-md-5">
-            <p align="left"><span class="label label-primary">{{ R.rating }}</span></p>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ R.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ (R.rating-500)/20 }}%; min-width: 2em;">
+                    <span>{{ R.rating }}</span>
+                </div>
+            </div>
             <form action="{{ url_for('home') }}", method="POST">
                 <input type="hidden" name="winner" value="{{ R.id }}"></input>
                 <input type="hidden" name="loser" value="{{ L.id }}"></input>
