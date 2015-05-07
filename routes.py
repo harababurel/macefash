@@ -11,12 +11,12 @@ from settings import SETTINGS
 from subprocess import Popen, PIPE
 from random import randint, choice, sample, shuffle
 from redirectSolver import solveRedirect
+from ratingSystem import getNewRatings, processVote
+from getIP import getIP
 
 from app import app
 from models import *
 import os
-
-basePic = 'https://graph.facebook.com/%s/picture?width=%s&height=%s'
 
 
 def checkAuth(username, password):
@@ -48,16 +48,6 @@ def sh(script):
     """
     (out, err) = Popen(list(script.split()), stdout=PIPE).communicate()
     return str(out)
-
-
-def getIP():
-    """
-    'unknown' serves as a universal IP :D
-    """
-    ip = request.headers.get('X-Real-IP')
-    if ip is None:
-        ip = 'unknown'
-    return ip
 
 
 def getThemes():
@@ -95,56 +85,17 @@ def getGenderCount(gender):
     return len(Person.query.filter(Person.gender == gender).all())
 
 
-def updateRatings(A, B):
-    """
-    Elo rating system.
-    kFactor values similar to the ones used by FIDE.
-    """
-    A = db.session.query(Person).get(A)
-    B = db.session.query(Person).get(B)
-
-    expectedA = 1.0 / (1.0 + 10.0 ** ((B.rating - A.rating)/400.0))
-    expectedB = 1.0 / (1.0 + 10.0 ** ((A.rating - B.rating)/400.0))
-
-    newA = int(A.rating + A.kFactor * (1.0 - expectedA))
-    newB = int(B.rating + B.kFactor * (0.0 - expectedB))
-
-    deltaA = newA - A.rating
-    deltaB = newB - B.rating
-
-    print "new rating for <%s>: %i (delta: %i)\nnew rating for <%s>: %i (delta: %i)" % (A.username, newA, deltaA, B.username, newB, deltaB)
-
-    # update all relevant stats
-    A.rating, B.rating = newA, newB
-    A.maxRating, B.maxRating = max(A.maxRating, A.rating), max(B.maxRating, B.rating)
-    A.games, B.games = A.games + 1, B.games + 1
-    A.wins = A.wins + 1
-
-    for X in [A, B]:
-        if X.kFactor == 40 and (X.maxRating >= 2300 or X.games > 30):
-            X.kFactor = 20
-        if X.kFactor == 20 and X.maxRating > 2400:
-            X.kFactor = 10
-
-    db.session.commit()
-
-
 @app.route('/', methods=['GET', 'POST'])
 @requiresAuth
 def home():
-    global basePic
-
     if request.method == 'POST':
-        A, B = int(request.form['winner']), int(request.form['loser'])
-        print "user <%s> voted for <%i> instead of <%i>" % (getIP(), A, B)
-
-        updateRatings(A, B)
+        processVote(request.form)
         return redirect(url_for('home'))
 
     L, R = sample(list(db.session.query(Person).filter(and_(Person.gender == getCurrentGender(), Person.hidden == False)).all()), 2)
 
-    picL = solveRedirect(basePic % (L.username, 500, 500))
-    picR = solveRedirect(basePic % (R.username, 500, 500))
+    picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
+    picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
 
     return render_template(
             'home.html',
@@ -201,12 +152,11 @@ def genderHelp():
     try:
         remaining = list(db.session.query(Person).filter(and_(Person.gender == None, Person.hidden == False)).all())
         entry = choice(remaining)
-        # entry = db.session.query(Person).filter(and_(Person.gender==None, Person.hidden==False)).first() #by id
     except:
         print "no more genders to classify (probably)"
         return redirect(url_for('home'))
 
-    pic = solveRedirect(basePic % (entry.username, 400, 400))
+    pic = solveRedirect(SETTINGS['basePic'] % (entry.username, 400, 400))
     girls = getGenderCount(False)
     boys = getGenderCount(True)
     ungendered = getGenderCount(None)

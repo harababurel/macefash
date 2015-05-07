@@ -19,9 +19,9 @@ def generateDatabase():
                 gender=True,
                 city='Palo Alto',
                 school='Harvard',
-                rating=1500,
-                maxRating=1500,
-                kFactor=40,
+                rating=1200.0,
+                maxRating=1200.0,
+                volatility=385.0,
                 games=0,
                 wins=0,
                 hidden=False

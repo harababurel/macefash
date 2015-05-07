@@ -14,9 +14,9 @@ class Person(db.Model):
     city = db.Column(db.String, unique=False, nullable=True)
     school = db.Column(db.String, unique=False, nullable=True)
 
-    rating = db.Column(db.Integer, unique=False, nullable=True)
-    maxRating = db.Column(db.Integer, unique=False, nullable=True)
-    kFactor = db.Column(db.Integer, unique=False, nullable=True)
+    rating = db.Column(db.Float, unique=False, nullable=True)
+    maxRating = db.Column(db.Float, unique=False, nullable=True)
+    volatility = db.Column(db.Float, unique=False, nullable=True)
 
     games = db.Column(db.Integer, unique=False, nullable=True)
     wins = db.Column(db.Integer, unique=False, nullable=True)
@@ -29,9 +29,9 @@ class Person(db.Model):
             gender=None,
             city=None,
             school=None,
-            rating=1500,
-            maxRating=1500,
-            kFactor=40,
+            rating=1200.0,
+            maxRating=1200.0,
+            volatility=385.0,
             games=0,
             wins=0,
             hidden=False
@@ -42,7 +42,7 @@ class Person(db.Model):
         self.school = school
         self.rating = rating
         self.maxRating = maxRating
-        self.kFactor = kFactor
+        self.volatility = volatility
         self.games = games
         self.wins = wins
         self.hidden = hidden
@@ -58,7 +58,7 @@ class Vote(db.Model):
     ip = db.Column(db.String, unique=False, nullable=True)
     winner = db.Column(db.Integer, unique=False, nullable=True)
     loser = db.Column(db.Integer, unique=False, nullable=True)
-    when = db.Column(db.String, unique=False, nullable=True)
+    when = db.Column(db.DateTime, unique=False, nullable=True)
 
     def __init__(self, ip, winner, loser, when):
         self.ip = ip
@@ -67,7 +67,7 @@ class Vote(db.Model):
         self.when = when
 
     def __repr__(self):
-        return "%s voted (%i, %i) at %s" % (self.ip, self.winner, self.loser, self.when)
+        return "%s voted (%i, %i)" % (self.ip, self.winner, self.loser, self.when)
 
 
 class Message(db.Model):
@@ -77,7 +77,7 @@ class Message(db.Model):
     name = db.Column(db.String, unique=False, nullable=True)
     ip = db.Column(db.String, unique=False, nullable=True)
     message = db.Column(db.String, unique=False, nullable=False)
-    when = db.Column(db.String, unique=False, nullable=True)
+    when = db.Column(db.DateTime, unique=False, nullable=True)
 
     def __init__(self, name, ip, message, when):
         self.name = name

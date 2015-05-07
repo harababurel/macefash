@@ -1,9 +1,9 @@
-app.db
-settings.py
 app.pyc
 databaseGenerator.pyc
-main.pyc
+getIP.pyc
 models.pyc
+normalCDFinverse.pyc
+ratingSystem.pyc
 redirectSolver.pyc
 routes.pyc
 settings.pyc
