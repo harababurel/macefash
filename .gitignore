@@ -1,3 +1,5 @@
+app.db
+settings.py
 app.pyc
 databaseGenerator.pyc
 getIP.pyc
