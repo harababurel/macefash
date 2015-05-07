@@ -13,7 +13,14 @@ sudo apt-get install python2.7 python-flask python-flask-sqlalchemy
 This should be enough to get you covered. Additional tinkering might be necessary.
 
 ## How to deploy
-Macefash can be run locally (on port 8080, by default) using the following command:
+First off, the database needs to be generated. In order to achieve this, run the following command:
+```console
+python databaseGenerator.py
+```
+This will parse the local files (placed in `static/cns/`) and scrape all profile links from them. In addition to the profiles, the generator will also add a few themes for the website.
+Note: the script does **not** overwrite existing entries, so it can be safely executed in case of more profile links having been added to the local files. Only the new entries will suffer any changes. Keep in mind that they will need to be manually classified into genders (through the `genderHelp` interface).
+
+Macefash can be run locally (on port `8080`, by default) using the following command:
 ```console
 python main.py
 ```
@@ -22,7 +29,5 @@ The port can be changed in the last line of the file:
 ```python
     app.run(host='0.0.0.0', port=8080, debug=True)
 ```
-Using the `debug=True` flag is *not* recommended for production use.
-
-## How to add data
-The application creates a sample database with dummy entries. Additional entries can be added via command-line. A utility that simplifies the process will probably be built later on.
+Using the `debug=True` flag is **not** recommended for production use.
+You should now be able to access the platform on [localhost:8080](https://localhost:8080).

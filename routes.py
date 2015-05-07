@@ -92,7 +92,8 @@ def home():
         processVote(request.form)
         return redirect(url_for('home'))
 
-    L, R = sample(list(db.session.query(Person).filter(and_(Person.gender == getCurrentGender(), Person.hidden == False)).all()), 2)
+    pool = sorted(db.session.query(Person).filter(and_(Person.gender == getCurrentGender(), Person.hidden == False)).all(), key=lambda x: x.games)
+    L, R = sample(pool[:10], 2)
 
     picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
     picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))

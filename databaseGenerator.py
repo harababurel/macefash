@@ -81,7 +81,8 @@ def generateDatabase():
                         if already is None:
                             db.session.add(Person(username=username[0]))
                         else:
-                            print "Person(username='%s') already exists!" % username[0]
+                            print "'%s' already exists!" % username[0]
+                        db.session.query(Person).filter(Person.username == username[0]).first().school = 'cns/%s' % grade+letter
 
     themes = [
             Theme(
@@ -98,3 +99,6 @@ def generateDatabase():
             db.session.add(x)
 
     db.session.commit()
+
+if __name__ == '__main__':
+    generateDatabase()
