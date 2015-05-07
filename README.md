@@ -18,7 +18,8 @@ First off, the database needs to be generated. In order to achieve this, run the
 python databaseGenerator.py
 ```
 This will parse the local files (placed in `static/cns/`) and scrape all profile links from them. In addition to the profiles, the generator will also add a few themes for the website.
-Note: the script does **not** overwrite existing entries, so it can be safely executed in case of more profile links having been added to the local files. Only the new entries will suffer any changes. Keep in mind that they will need to be manually classified into genders (through the `genderHelp` interface).
+
+*Note*: the script does **not** overwrite existing entries, so it can be safely executed in case of more profile links having been added to the local files. Only the new entries will suffer any changes. Keep in mind that they will need to be manually classified into genders (through the `genderHelp` interface).
 
 Macefash can be run locally (on port `8080`, by default) using the following command:
 ```console
