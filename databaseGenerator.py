@@ -5,9 +5,10 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from app import db
 from models import *
+from re import findall
 
 
-def generateDatabase():
+def generateSampleDatabase():
     """
     Note: only the username field is necessary.
     The other fields are provided with defaults.
@@ -62,3 +63,38 @@ def generateDatabase():
 
     db.session.commit()
     db.session.close()
+
+def generateDatabase():
+    db.create_all()
+
+    for grade in range(9, 13):
+        for letter in 'abcdefghi':
+            with open('static/cns/%s' % grade+letter, 'r') as f:
+                for x in f:
+                    if 'id=' in x.split()[-1]:
+                        username = findall(r'id=(\d+)', x.split()[-1])
+                    else:
+                        username = findall(r'facebook\.com\/(.+)\?', x.split()[-1])
+
+                    if username:
+                        already = db.session.query(Person).filter(Person.username == username[0]).first()
+                        if already is None:
+                            db.session.add(Person(username=username[0]))
+                        else:
+                            print "Person(username='%s') already exists!" % username[0]
+
+    themes = [
+            Theme(
+                name='Standard',
+                source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+                ),
+            Theme(
+                name='United',
+                source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/united/bootstrap.min.css'
+                )
+            ]
+    for x in themes:
+        if db.session.query(Theme).filter(Theme.name == x.name).first() is None:
+            db.session.add(x)
+
+    db.session.commit()
