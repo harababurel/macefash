@@ -31,4 +31,5 @@ The port can be changed in the last line of the file:
     app.run(host='0.0.0.0', port=8080, debug=True)
 ```
 Using the `debug=True` flag is **not** recommended for production use.
-You should now be able to access the platform on [localhost:8080](https://localhost:8080).
+
+You should now be able to access the platform on [localhost:8080](http://localhost:8080) :D.
