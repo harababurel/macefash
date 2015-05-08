@@ -64,31 +64,37 @@ def generateSampleDatabase():
     db.session.commit()
     db.session.close()
 
+
 def generateDatabase():
     db.create_all()
 
     for grade in range(9, 13):
         for letter in 'abcdefghi':
             with open('static/cns/%s' % str(grade)+letter, 'r') as f:
+
+                print "FILE: %s" % str(grade)+letter
                 for x in f:
                     if 'id=' in x.split()[-1]:
                         username = findall(r'id=(\d+)', x.split()[-1])
                     else:
-                        username = findall(r'facebook\.com\/(.+)\?', x.split()[-1])
+                        username = findall(r'facebook\.com\/([a-zA-Z0-9\.]+)', x.split()[-1])
 
                     if username:
                         print "processing '%s'" % username[0]
                         already = db.session.query(Person).filter(Person.username == username[0]).first()
-                        if already is None:
-                            gender = None
-                            if x.split()[0] in 'BF':
-                                gender = (x.split()[0] == 'B')
-                            db.session.add(Person(username=username[0], gender=gender))
-                            print "----> added (gender=%r)" % gender
-                        else:
-                            print "----> already exists!"
 
-                        db.session.query(Person).filter(Person.username == username[0]).first().school = 'cns/%s' % str(grade)+letter
+                        school = 'cns/%s' % str(grade)+letter
+                        gender = None
+                        if x.split()[0] in 'BF':
+                            gender = (x.split()[0] == 'B')
+
+                        if already is None:
+                            db.session.add(Person(username=username[0], gender=gender, school=school))
+                            print "----> added with: gender=%r, school=%s" % (gender, school)
+                        else:
+                            already.gender = gender
+                            already.school = school
+                            print "----> already exists. updated gender and school."
 
     themes = [
             Theme(
