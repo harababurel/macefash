@@ -99,6 +99,9 @@ def home():
     if randint(1, 2) == 1:
         R = choice(pool)
 
+    while L == R:
+        R = choice(pool)
+
     picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
     picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
 
