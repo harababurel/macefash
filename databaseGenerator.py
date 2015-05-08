@@ -92,7 +92,8 @@ def generateDatabase():
                             db.session.add(Person(username=username[0], gender=gender, school=school))
                             print "----> added with: gender=%r, school=%s" % (gender, school)
                         else:
-                            already.gender = gender
+                            if gender is not None:
+                                already.gender = gender
                             already.school = school
                             print "----> already exists. updated gender and school."
 
