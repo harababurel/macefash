@@ -69,7 +69,7 @@ def generateDatabase():
 
     for grade in range(9, 13):
         for letter in 'abcdefghi':
-            with open('static/cns/%s' % grade+letter, 'r') as f:
+            with open('static/cns/%s' % str(grade)+letter, 'r') as f:
                 for x in f:
                     if 'id=' in x.split()[-1]:
                         username = findall(r'id=(\d+)', x.split()[-1])
@@ -77,12 +77,18 @@ def generateDatabase():
                         username = findall(r'facebook\.com\/(.+)\?', x.split()[-1])
 
                     if username:
+                        print "processing '%s'" % username[0]
                         already = db.session.query(Person).filter(Person.username == username[0]).first()
                         if already is None:
-                            db.session.add(Person(username=username[0]))
+                            gender = None
+                            if x.split()[0] in 'BF':
+                                gender = (x.split()[0] == 'B')
+                            db.session.add(Person(username=username[0], gender=gender))
+                            print "----> added (gender=%r)" % gender
                         else:
-                            print "'%s' already exists!" % username[0]
-                        db.session.query(Person).filter(Person.username == username[0]).first().school = 'cns/%s' % grade+letter
+                            print "----> already exists!"
+
+                        db.session.query(Person).filter(Person.username == username[0]).first().school = 'cns/%s' % str(grade)+letter
 
     themes = [
             Theme(
