@@ -86,7 +86,7 @@ def getGenderCount(gender):
 
 
 @app.route('/', methods=['GET', 'POST'])
-@requiresAuth
+# @requiresAuth
 def home():
     if request.method == 'POST':
         processVote(request.form)
@@ -224,6 +224,35 @@ def showAll(page=None):
 
     return render_template(
             'all.html',
+            entries=shownEntries,
+            page=page,
+            pages=pages,
+            firstNav=firstNav,
+            lastNav=lastNav,
+            totalVotes=getTotalVotes(),
+            currentTheme=getCurrentTheme(),
+            themes=getThemes(),
+            girls=getGenderCount(False),
+            boys=getGenderCount(True),
+            ungendered=getGenderCount(None)
+            )
+
+
+@app.route('/votes')
+@app.route('/votes/<int:page>')
+@requiresAuth
+def showVotes(page=None):
+    if page is None:
+        page = 1
+    onPage = 40
+
+    entries = db.session.query(Vote).all()[::-1]
+    pages = len(entries) // onPage + (len(entries) % onPage != 0)
+    firstNav, lastNav = max(1, page-3), min(page+3, pages)
+    shownEntries = entries[(page-1)*onPage: min(len(entries), page*onPage)]
+
+    return render_template(
+            'votes.html',
             entries=shownEntries,
             page=page,
             pages=pages,

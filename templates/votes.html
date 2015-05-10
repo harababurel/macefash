@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block homeActive  %}{% endblock %}
+{% block topActive  %}{% endblock %}
+{% block aboutActive  %}{% endblock %}
+
+{% block title %}votes{{ howMany }}{% endblock %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>ip</th>
+      <th>winner</th>
+      <th>loser</th>
+      <th>when</th>
+      <th>spam</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in entries %}
+      <tr>
+        <td>{{ x.id }}</td>
+        <td>{{ x.ip }}</td>
+        <td>{{ x.winner }}</td>
+        <td>{{ x.loser }}</td>
+        <td>{{ x.when }}</td>
+        <td>{{ x.spam }}</td>
+      </tr>
+   {% endfor %}
+  </tbody>
+</table>
+
+<div class="text-center">
+  <nav>
+    <ul class="pagination pagination-sm">
+      <li{% if page==1 %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showVotes', page=1) }}" aria-label="first">
+          <span aria-hidden="true">first</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="pagination">
+      <li{% if page==1 %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showVotes', page=page-1) }}" aria-label="previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      {% for i in range(firstNav, lastNav+1) %}
+      <li {% if i == page %}class="active"{% endif %}>
+        <a href="{{ url_for('showVotes', page=i) }}">{{ i }}</a>
+      </li>
+      {% endfor %}
+
+      <li{% if page==pages %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showVotes', page=page+1) }}" aria-label="next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="pagination pagination-sm">
+      <li{% if page==pages %} class="disabled"{% endif %}>
+        <a href="{{ url_for('showVotes', page=pages) }}" aria-label="last">
+          <span aria-hidden="true">last</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+{% endblock %}

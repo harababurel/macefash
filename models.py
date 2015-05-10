@@ -56,18 +56,20 @@ class Vote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     ip = db.Column(db.String, unique=False, nullable=True)
-    winner = db.Column(db.Integer, unique=False, nullable=True)
-    loser = db.Column(db.Integer, unique=False, nullable=True)
+    winner = db.Column(db.String, unique=False, nullable=True)
+    loser = db.Column(db.String, unique=False, nullable=True)
     when = db.Column(db.DateTime, unique=False, nullable=True)
+    spam = db.Column(db.Boolean, unique=False, nullable=False)
 
-    def __init__(self, ip, winner, loser, when):
+    def __init__(self, ip, winner, loser, when, spam=False):
         self.ip = ip
         self.winner = winner
         self.loser = loser
         self.when = when
+        self.spam = spam
 
     def __repr__(self):
-        return "%s voted (%i, %i)" % (self.ip, self.winner, self.loser, self.when)
+        return "%s voted (%s, %s)" % (self.ip, self.winner, self.loser, self.when)
 
 
 class Message(db.Model):
