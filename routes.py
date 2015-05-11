@@ -9,9 +9,11 @@ from sqlalchemy import and_, or_
 from functools import wraps
 from settings import SETTINGS
 from subprocess import Popen, PIPE
-from random import randint, choice, sample, shuffle
+from random import choice
 from redirectSolver import solveRedirect
-from ratingSystem import getNewRatings, processVote
+from ratingSystem import getNewRatings
+from voteSystem import processVote
+from drawSystem import drawChoices
 from getIP import getIP
 
 from app import app
@@ -92,25 +94,14 @@ def home():
         processVote(request.form)
         return redirect(url_for('home'))
 
-    pool = sorted(db.session.query(Person).filter(and_(Person.gender == getCurrentGender(), Person.hidden == False)).all(), key=lambda x: x.games)
-    L, R = sample(pool[:10], 2) # at first, choices are selected from the least voted persons
-    if randint(1, 2) == 1:      # in order to guarantee variety, each choice has a 50% chance
-        L = choice(pool)        # of being re-chosen from the entire person pool
-    if randint(1, 2) == 1:
-        R = choice(pool)
-
-    while L == R:
-        R = choice(pool)
-
-    picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
-    picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
+    choices = drawChoices(wantedGender=getCurrentGender())
 
     return render_template(
             'home.html',
-            L=L,
-            R=R,
-            picL=picL,
-            picR=picR,
+            L=choices['L'],
+            R=choices['R'],
+            picL=choices['picL'],
+            picR=choices['picR'],
             totalVotes=getTotalVotes(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
