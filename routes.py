@@ -258,6 +258,19 @@ def showVotes(page=None):
             )
 
 
+@app.route('/about')
+def about():
+    return render_template(
+            'about.html',
+            totalVotes=getTotalVotes(),
+            currentTheme=getCurrentTheme(),
+            themes=getThemes(),
+            girls=getGenderCount(False),
+            boys=getGenderCount(True),
+            ungendered=getGenderCount(None)
+            )
+
+
 @app.errorhandler(404)
 def pageNotFound(e):
     return render_template(
