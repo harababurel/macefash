@@ -9,6 +9,7 @@ from models import *
 from settings import SETTINGS
 from redirectSolver import solveRedirect
 
+
 def drawChoices(wantedGender):
     pool = sorted(db.session.query(Person).filter(and_(Person.gender == wantedGender, Person.hidden == False)).all(), key=lambda x: x.games)
     L, R = sample(pool[:10], 2) # at first, choices are selected from the least voted persons

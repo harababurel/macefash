@@ -26,7 +26,7 @@ def detectSpam(players):
         if timeDiff < SETTINGS['minVoteWait']:
             isSpam = True
 
-        print "waited since last vote: %.2f" % timeDiff
+        #print "waited since last vote: %.2f" % timeDiff
 
     db.session.add(Vote(ip=who, winner=players[0].username, loser=players[1].username, when=now, spam=isSpam))
     db.session.commit()
@@ -41,10 +41,10 @@ def processVote(form):
         ]
 
     if detectSpam(players):
-        print "user <%s> is spamming votes for <%s>" % (getIP(), players[0].username)
+        #print "user <%s> is spamming votes for <%s>" % (getIP(), players[0].username)
         return
 
-    print "user <%s> voted:\n    winner: <%s>\n    loser: <%s>" % (getIP(), players[0].username, players[1].username)
+    #print "user <%s> voted:\n    winner: <%s>\n    loser: <%s>" % (getIP(), players[0].username, players[1].username)
 
     newStats = {}
 

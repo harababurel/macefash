@@ -54,7 +54,7 @@
       </li>
       {% endfor %}
 
-      <li{% if page==pages %} class="disabled"{% endif %}>
+      <li{% if page>=pages %} class="disabled"{% endif %}>
         <a href="{{ url_for('showVotes', page=page+1) }}" aria-label="next">
           <span aria-hidden="true">&raquo;</span>
         </a>
@@ -62,7 +62,7 @@
     </ul>
 
     <ul class="pagination pagination-sm">
-      <li{% if page==pages %} class="disabled"{% endif %}>
+      <li{% if page>=pages %} class="disabled"{% endif %}>
         <a href="{{ url_for('showVotes', page=pages) }}" aria-label="last">
           <span aria-hidden="true">last</span>
         </a>
