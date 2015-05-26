@@ -46,12 +46,8 @@ def generateSampleDatabase():
             Theme(
                 name='Standard',
                 source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
-            ),
-            Theme(
-                name='United',
-                source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/united/bootstrap.min.css'
             )
-    ]
+            ]
 
     for x in persons:
         if db.session.query(Person).filter(Person.username == x.username).first() is None:
@@ -80,7 +76,7 @@ def generateDatabase():
                         username = findall(r'facebook\.com\/([a-zA-Z0-9\.]+)', x.split()[-1])
 
                     if username:
-                        print "processing '%s'" % username[0]
+                        #print "processing '%s'" % username[0]
                         already = db.session.query(Person).filter(Person.username == username[0]).first()
 
                         school = 'cns/%s' % str(grade)+letter
@@ -90,23 +86,28 @@ def generateDatabase():
 
                         if already is None:
                             db.session.add(Person(username=username[0], gender=gender, school=school))
-                            print "----> added with: gender=%r, school=%s" % (gender, school)
+                            #print "----> added with: gender=%r, school=%s" % (gender, school)
                         else:
                             if gender is not None:
                                 already.gender = gender
                             already.school = school
-                            print "----> already exists. updated gender and school."
+                            #print "----> already exists. updated gender and school."
 
     themes = [
             Theme(
                 name='Standard',
                 source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
-                ),
-            Theme(
-                name='United',
-                source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/united/bootstrap.min.css'
                 )
             ]
+
+    extraThemes = list('Cyborg Darkly Lumen Readable Sandstone Simplex SuperHero United Yeti'.split())
+    for x in extraThemes:
+        themes.append(
+                Theme(
+                    name=x,
+                    source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/%s/bootstrap.min.css' % x.lower()
+                    )
+                )
     for x in themes:
         if db.session.query(Theme).filter(Theme.name == x.name).first() is None:
             db.session.add(x)
