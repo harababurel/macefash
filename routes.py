@@ -155,7 +155,7 @@ def genderHelp():
         print "no more genders to classify (probably)"
         return redirect(url_for('home'))
 
-    pic = solveRedirect(SETTINGS['basePic'] % (entry.username, 400, 400))
+    pic = SETTINGS['basePic'] % (entry.username, 400, 400)
     girls = getGenderCount(False)
     boys = getGenderCount(True)
     ungendered = getGenderCount(None)

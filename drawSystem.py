@@ -21,8 +21,11 @@ def drawChoices(wantedGender):
     while L == R:
         R = choice(pool)
 
-    picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
-    picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
+    # picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
+    # picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
+    # ^the solveRedirect method is EXTREMELY slow
+    picL = SETTINGS['basePic'] % (L.username, 500, 500)
+    picR = SETTINGS['basePic'] % (R.username, 500, 500)
 
     return {
             'L': L,
