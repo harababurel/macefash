@@ -24,7 +24,7 @@
   </thead>
   <tbody>
     {% for x in entries %}
-      <tr>
+      <tr class="{% if x.hidden %}danger{% else %}active{% endif %}">
         <td>{{ x.id }}</td>
         <td><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.username }}/picture?width=300&height=300"></a></td>
         <td>{{ x.gender }}</td>
@@ -35,7 +35,7 @@
         <td>{{ x.volatility }}</td>
         <td>{{ x.games }}</td>
         <td>{{ x.wins }}</td>
-        <td>{{ x.hidden }}</td>
+        <td>{{ x.hidden }} (<a href="{{ url_for('flipHidden', username=x.username) }}")>{% if x.hidden %}unhide{% else %}hide{% endif %}</a>)</td>
       </tr>
    {% endfor %}
   </tbody>

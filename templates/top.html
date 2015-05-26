@@ -3,22 +3,22 @@
 {% block homeActive  %}{% endblock %}
 {% block aboutActive %}{% endblock %}
 
-{% block title %}top{{ howMany }}{% endblock %}
+{% block title %}top{% endblock %}
 {% block content %}
 <table class="table table-hover">
     <thead>
         <tr>
             <th>rank</th>
             <th>pic</th>
-            <th>votes</th>
+            <th>rating</th>
         </tr>
     </thead>
     <tbody>
         {% for i in range(0, howMany) %}
-            <tr {% if rank[i] == 1 %}class="danger"{% elif rank[i] == 2 %}class="info"{% elif rank[i] == 3 %}class="warning"{% endif %}>
-                <td>{{ rank[i] }}</td>
-                <td><img src="{{ entries[i].pic }}" height="{{ [400, 300, 250][rank[i]-1] if rank[i] <= 3 else 200 }}" width="{{ [400, 300, 250][rank[i]-1] if rank[i] <= 3 else 200 }}" class="thumbnail"></td>
-                <td>{{ entries[i].votes }}</td>
+            <tr class="active">
+                <td><strong>{{ i+1 }}</strong></td>
+                <td><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
+                <td><strong>{{ entries[i].rating }}</strong></td>
             </tr>
         {% endfor %}
     </tbody>

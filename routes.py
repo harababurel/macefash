@@ -102,6 +102,8 @@ def home():
             R=choices['R'],
             picL=choices['picL'],
             picR=choices['picR'],
+            ratingL=int(choices['L'].rating),
+            ratingR=int(choices['R'].rating),
             totalVotes=getTotalVotes(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
@@ -156,9 +158,6 @@ def genderHelp():
         return redirect(url_for('home'))
 
     pic = SETTINGS['basePic'] % (entry.username, 400, 400)
-    girls = getGenderCount(False)
-    boys = getGenderCount(True)
-    ungendered = getGenderCount(None)
 
     total = len([x for x in db.session.query(Person).all()])
     classified = total - len(remaining)
@@ -173,11 +172,25 @@ def genderHelp():
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=girls,
-            boys=boys,
-            ungendered=ungendered,
+            girls=getGenderCount(False),
+            boys=getGenderCount(True),
+            ungendered=getGenderCount(None),
             percentage=percentage
             )
+
+
+@app.route('/flipHidden/<string:username>')
+@requiresAuth
+def flipHidden(username=None):
+    if username is None:
+        print "username is None. dunno wot 2 do :-??"
+        return redirect(url_for('showAll'))
+
+    person = db.session.query(Person).filter(Person.username == username).first()
+    person.hidden = not person.hidden
+    db.session.commit()
+    return redirect(url_for('showAll'))
+
 
 
 @app.route('/classifyGender/<string:username>')
@@ -197,6 +210,28 @@ def classifyGender(username=None, newGender=None):
     db.session.commit()
     return redirect(url_for('genderHelp'))
 
+
+@app.route('/top/<int:gender>')
+def showTop(gender=None):
+    if gender is None or not gender in range(2):
+        return redirect(url_for('home'))
+
+    entries = sorted(db.session.query(Person).filter(Person.gender == gender).all(), key=lambda x: x.rating, reverse=True)[:15]
+    pics = [SETTINGS['basePic'] % (x.username, 400, 400) for x in entries]
+
+    return render_template(
+            'top.html',
+            entries=entries,
+            howMany=len(entries),
+            pics=pics,
+            totalVotes=getTotalVotes(),
+            currentTheme=getCurrentTheme(),
+            themes=getThemes(),
+            girls=getGenderCount(False),
+            boys=getGenderCount(True),
+            ungendered=getGenderCount(None),
+            userIP=getIP()
+            )
 
 @app.route('/all')
 @app.route('/all/<int:page>')
@@ -225,7 +260,8 @@ def showAll(page=None):
             themes=getThemes(),
             girls=getGenderCount(False),
             boys=getGenderCount(True),
-            ungendered=getGenderCount(None)
+            ungendered=getGenderCount(None),
+            userIP=getIP()
             )
 
 
@@ -254,7 +290,8 @@ def showVotes(page=None):
             themes=getThemes(),
             girls=getGenderCount(False),
             boys=getGenderCount(True),
-            ungendered=getGenderCount(None)
+            ungendered=getGenderCount(None),
+            userIP=getIP()
             )
 
 
@@ -267,7 +304,8 @@ def about():
             themes=getThemes(),
             girls=getGenderCount(False),
             boys=getGenderCount(True),
-            ungendered=getGenderCount(None)
+            ungendered=getGenderCount(None),
+            userIP=getIP()
             )
 
 
