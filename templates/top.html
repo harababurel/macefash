@@ -16,9 +16,14 @@
     <tbody>
         {% for i in range(0, howMany) %}
             <tr class="active">
-                <td><strong>{{ i+1 }}</strong></td>
-                <td><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
-                <td><strong>{{ entries[i].rating }}</strong></td>
+                <td class="col-md-1"><strong>{{ i+1 }}</strong></td>
+                <td class="col-md-4"><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
+                <td class="col-md-7">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ entries[i].rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ (entries[i].rating-800)/11 }}%; min-width: 2em; display:block;">
+                        <span>{{ entries[i].rating }}</span>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

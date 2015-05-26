@@ -83,6 +83,14 @@ def getTotalVotes():
     return totalVotes
 
 
+def getUniqueVoters():
+    try:
+        uniqueVoters = len(set([x.ip for x in db.session.query(Vote).all()]))
+    except:
+        uniqueVoters = None
+    return uniqueVoters
+
+
 def getGenderCount(gender):
     return len(Person.query.filter(Person.gender == gender).all())
 
@@ -105,6 +113,7 @@ def home():
             ratingL=int(choices['L'].rating),
             ratingR=int(choices['R'].rating),
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
@@ -169,6 +178,7 @@ def genderHelp():
             x=entry,
             pic=pic,
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
@@ -225,6 +235,7 @@ def showTop(gender=None):
             howMany=len(entries),
             pics=pics,
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
@@ -256,6 +267,7 @@ def showAll(page=None):
             firstNav=firstNav,
             lastNav=lastNav,
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
@@ -286,6 +298,7 @@ def showVotes(page=None):
             firstNav=firstNav,
             lastNav=lastNav,
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
@@ -300,6 +313,7 @@ def about():
     return render_template(
             'about.html',
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
@@ -314,6 +328,7 @@ def pageNotFound(e):
     return render_template(
             '404.html',
             totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
             girls=getGenderCount(False),
