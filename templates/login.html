@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block homeActive  %}{% endblock %}
+{% block topActive  %}{% endblock %}
+{% block aboutActive  %}{% endblock %}
+
+{% block title %}login{{ howMany }}{% endblock %}
+{% block content %}
+
+    {% if result.error %}
+        <h2>error: {{ result.error.message }}</h2>
+    {% endif %}
+
+    {% if result.user %}
+        <h2>hi, <strong>{{ result.user.name }}</strong></h2>
+        <h2>your id is <strong>{{ result.user.id }}</strong></h2>
+        <h2>your email is <strong>{{ result.user.email }}</strong></h2>
+        <h2>your name is <strong>{{ result.user.name }}</strong></h2>
+        <h2>your username is <strong>{{ result.user.username }}</strong></h2>
+        <h2>your nickname is <strong>{{ result.user.nickname }}</strong></h2>
+        <h2>your link is <strong>{{ result.user.link }}</strong></h2>
+        <h2>your picture is <strong>{{ result.user.picture }}</strong></h2>
+        <h2>your bio is <strong>{{ result.user.bio }}</strong></h2>
+    {% endif %}
+
+{% endblock %}

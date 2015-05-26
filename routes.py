@@ -3,9 +3,11 @@ This module links the URLs to the corresponding templates.
 Also contains most of the project's functionality.
 """
 from flask import Flask, render_template, redirect, url_for, \
-                  request, session, flash, Response
+                  request, make_response, session, flash, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
+from authomatic.adapters import WerkzeugAdapter
+from authomatic import Authomatic
 from functools import wraps
 from settings import SETTINGS
 from subprocess import Popen, PIPE
@@ -19,6 +21,8 @@ from getIP import getIP
 from app import app
 from models import *
 import os
+
+authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
 
 
 def checkAuth(username, password):
@@ -306,6 +310,47 @@ def showVotes(page=None):
             ungendered=getGenderCount(None),
             userIP=getIP()
             )
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    try:
+        response = make_response()
+        result = authomatic.login(WerkzeugAdapter(request, response), 'fb')
+    except:
+        return 'could not log you in :( go <a href="/">home</a>'
+
+    if result:
+        if result.user:
+            result.user.update()
+
+        return render_template(
+                'login.html',
+                result=result,
+                totalVotes=getTotalVotes(),
+                uniqueVoters=getUniqueVoters(),
+                currentTheme=getCurrentTheme(),
+                themes=getThemes(),
+                girls=getGenderCount(False),
+                boys=getGenderCount(True),
+                ungendered=getGenderCount(None),
+                userIP=getIP()
+                )
+    return response
+
+
+@app.errorhandler(404)
+def pageNotFound(e):
+    return render_template(
+            '404.html',
+            totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
+            currentTheme=getCurrentTheme(),
+            themes=getThemes(),
+            girls=getGenderCount(False),
+            boys=getGenderCount(True),
+            ungendered=getGenderCount(None)
+            ), 404
 
 
 @app.route('/about')
