@@ -253,7 +253,7 @@ def showAll(page=None):
     onPage = 40
 
     entries = db.session.query(Person).all()
-    entries = sorted(entries, key=lambda x: x.rating, reverse=True)
+    # entries = sorted(entries, key=lambda x: x.rating, reverse=True)
     # shuffle(entries)
     pages = len(entries) // onPage + (len(entries) % onPage != 0)
     firstNav, lastNav = max(1, page-3), min(page+3, pages)
