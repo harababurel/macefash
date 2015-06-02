@@ -64,11 +64,13 @@ def getCurrentTheme():
     try:
         themeName = db.session.query(Preference).filter(Preference.ip == getIP()).first().theme
         themeURL = db.session.query(Theme).filter(Theme.name == themeName).first().source
+        themeBG = db.session.query(Theme).filter(Theme.name == themeName).first().background
     except:
-        themeName = 'United'
-        themeURL = 'http://bootswatch.com/united/bootstrap.min.css'
+        themeName = 'Standard'
+        themeURL = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+        themeBG = 'subtle_white_feathers.png'
 
-    return (themeName, themeURL)
+    return (themeName, themeURL, themeBG)
 
 
 def getCurrentGender():

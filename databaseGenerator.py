@@ -45,7 +45,8 @@ def generateSampleDatabase():
     themes = [
             Theme(
                 name='Standard',
-                source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+                source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css',
+                background='subtle_white_feathers.png'
             )
             ]
 
@@ -96,16 +97,21 @@ def generateDatabase():
     themes = [
             Theme(
                 name='Standard',
-                source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+                source='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css',
+                background='subtle_white_feathers.png'
                 )
             ]
 
-    extraThemes = list('Cyborg Darkly Lumen Readable Sandstone Simplex SuperHero United Yeti'.split())
+    extraThemes = zip(
+            list('Cyborg Sandstone Simplex Paper'.split()),
+            list('wild_oliva.png skelatal_weave.png subtle_white_feathers.png linedpaper.png'.split())
+            )
     for x in extraThemes:
         themes.append(
                 Theme(
-                    name=x,
-                    source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/%s/bootstrap.min.css' % x.lower()
+                    name=x[0],
+                    source='//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/%s/bootstrap.min.css' % x[0].lower(),
+                    background=x[1]
                     )
                 )
     for x in themes:

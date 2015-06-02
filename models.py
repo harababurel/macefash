@@ -97,10 +97,12 @@ class Theme(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     source = db.Column(db.String, unique=True, nullable=False)
+    background = db.Column(db.String, unique=False, nullable=False)
 
-    def __init__(self, name, source):
+    def __init__(self, name, source, background):
         self.name = name
         self.source = source
+        self.background = background
 
     def __repr__(self):
         return "themeName: <%s>" % self.name
