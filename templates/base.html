@@ -55,7 +55,7 @@
                 <ul class="dropdown-menu" role="menu">
                   <li{% if currentGender==False %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=0) }}">gurls ({{ girls }})</a></li>
                   <li{% if currentGender==True %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=1) }}">bwoys ({{ boys }})</a></li>
-                  <li class="disabled"><a href="#">unknown ({{ ungendered }})</a></li>
+                  <li class="disabled"><a href="#">unclassified ({{ ungendered }})</a></li>
                 </ul>
               </li>
               <li class="dropdown">
