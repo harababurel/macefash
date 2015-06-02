@@ -66,8 +66,8 @@ def getCurrentTheme():
         themeURL = db.session.query(Theme).filter(Theme.name == themeName).first().source
         themeBG = db.session.query(Theme).filter(Theme.name == themeName).first().background
     except:
-        themeName = 'Standard'
-        themeURL = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+        themeName = 'Simplex'
+        themeURL = '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/simplex/bootstrap.min.css'
         themeBG = 'subtle_white_feathers.png'
 
     return (themeName, themeURL, themeBG)
