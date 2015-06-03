@@ -254,7 +254,7 @@ def showTop(gender=None):
 def showAll(page=None):
     if page is None:
         page = 1
-    onPage = 40
+    onPage = SETTINGS['entriesOnPage']
 
     entries = db.session.query(Person).all()
     # entries = sorted(entries, key=lambda x: x.rating, reverse=True)
@@ -287,7 +287,7 @@ def showAll(page=None):
 def showVotes(page=None):
     if page is None:
         page = 1
-    onPage = 40
+    onPage = SETTINGS['entriesOnPage']
 
     entries = db.session.query(Vote).all()[::-1]
     pages = len(entries) // onPage + (len(entries) % onPage != 0)
