@@ -81,7 +81,18 @@ def generateDatabase():
                         #print "processing '%s'" % username[0]
                         already = db.session.query(Person).filter(Person.username == username[0]).first()
 
-                        fullname = findall(r'B?F?\s?(.+)http.+', x)[0]
+                        fullname = findall('B?F?\s?(.+)\s?http.+', x)[0]
+                        fullname = fullname.replace('\xc5\x9e', 'S')
+                        fullname = fullname.replace('\xc8\x98', 'S')
+                        fullname = fullname.replace('\xc5\xa2', 'T')
+                        fullname = fullname.replace('\xc8\x9a', 'T')
+                        fullname = fullname.replace('\xc3\x81', 'A')
+                        fullname = fullname.replace('\xc4\x82', 'A')
+                        fullname = fullname.replace('\xc3\x82', 'A')
+                        fullname = fullname.replace('\xc3\x8e', 'I')
+
+
+
                         school = 'cns/%s' % str(grade)+letter
                         gender = None
                         if x.split()[0] in 'BF':
