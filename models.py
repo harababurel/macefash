@@ -121,7 +121,7 @@ class Preference(db.Model):
 
     def __init__(self, ip, theme=None, gender=None):
         self.ip = ip
-        self.theme = theme if theme is not None else "Standard"
+        self.theme = theme if theme is not None else "Simplex"
         self.gender = gender if gender is not None else False
 
     def __repr__(self):
