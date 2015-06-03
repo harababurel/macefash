@@ -27,7 +27,7 @@
     {% for x in entries %}
       <tr class="{% if x.hidden %}danger{% else %}active{% endif %}">
         <td>{{ x.id }}</td>
-        <td><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.username }}/picture?width=300&height=300"></a></td>
+        <td class="col-md-3"><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.username }}/picture?width=300&height=300"></a></td>
         <td>{{ x.fullname }}</td>
         <td>{{ x.gender }}</td>
         <td>{{ x.city }}</td>
@@ -37,7 +37,24 @@
         <td>{{ x.volatility }}</td>
         <td>{{ x.games }}</td>
         <td>{{ x.wins }}</td>
-        <td>{{ x.hidden }} (<a href="{{ url_for('flipHidden', username=x.username) }}")>{% if x.hidden %}unhide{% else %}hide{% endif %}</a>)</td>
+        <td>
+            <form action="{{ url_for('flipHidden') }}" method="POST">
+                <input type="hidden" name="id" value="{{ x.id }}"></input>
+                <div class="input-group">
+                    {% if not x.hidden %}
+                    <input type="text" class="form-control" value="{% if x.hidden %}hidden{% else %}shown{% endif %}" disabled></input>
+                    {% endif %}
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-{% if x.hidden %}primary{% else %}danger{% endif %}" type="submit">{% if x.hidden %}unhide{% else %}hide    {% endif %}</button>
+                    </span>
+
+                    {% if x.hidden %}
+                    <input type="text" class="form-control" value="{% if x.hidden %}hidden{% else %}shown{% endif %}" disabled></input>
+                    {% endif %}
+                </div>
+            </form>
+        </td>
       </tr>
    {% endfor %}
   </tbody>
@@ -47,7 +64,7 @@
   <nav>
     <ul class="pagination pagination-sm">
       <li{% if page==1 %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showAll', page=1) }}" aria-label="first">
+        <a href="{{ url_for('showAll', page=1) }}" aria-label="first" {% if page == 1 %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">first</span>
         </a>
       </li>
@@ -55,7 +72,7 @@
 
     <ul class="pagination">
       <li{% if page==1 %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showAll', page=page-1) }}" aria-label="previous">
+        <a href="{{ url_for('showAll', page=page-1) }}" aria-label="previous" {% if page == 1 %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -67,7 +84,7 @@
       {% endfor %}
 
       <li{% if page==pages %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showAll', page=page+1) }}" aria-label="next">
+        <a href="{{ url_for('showAll', page=page+1) }}" aria-label="next" {% if page >= pages %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
@@ -75,7 +92,7 @@
 
     <ul class="pagination pagination-sm">
       <li{% if page==pages %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showAll', page=pages) }}" aria-label="last">
+        <a href="{{ url_for('showAll', page=pages) }}" aria-label="last" {% if page >= pages %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">last</span>
         </a>
       </li>

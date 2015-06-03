@@ -35,7 +35,7 @@
   <nav>
     <ul class="pagination pagination-sm">
       <li{% if page==1 %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showVotes', page=1) }}" aria-label="first">
+        <a href="{{ url_for('showVotes', page=1) }}" aria-label="first" {% if page == 1 %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">first</span>
         </a>
       </li>
@@ -43,7 +43,7 @@
 
     <ul class="pagination">
       <li{% if page==1 %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showVotes', page=page-1) }}" aria-label="previous">
+        <a href="{{ url_for('showVotes', page=page-1) }}" aria-label="previous" {% if page == 1 %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -55,7 +55,7 @@
       {% endfor %}
 
       <li{% if page>=pages %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showVotes', page=page+1) }}" aria-label="next">
+        <a href="{{ url_for('showVotes', page=page+1) }}" aria-label="next" {% if page >= pages %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
@@ -63,7 +63,7 @@
 
     <ul class="pagination pagination-sm">
       <li{% if page>=pages %} class="disabled"{% endif %}>
-        <a href="{{ url_for('showVotes', page=pages) }}" aria-label="last">
+      <a href="{{ url_for('showVotes', page=pages) }}" aria-label="last" {% if page >= pages %}style="pointer-events: none;"{% endif %}>
           <span aria-hidden="true">last</span>
         </a>
       </li>

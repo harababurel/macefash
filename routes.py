@@ -195,18 +195,16 @@ def genderHelp():
             )
 
 
-@app.route('/flipHidden/<string:username>')
-@requiresAuth
-def flipHidden(username=None):
-    if username is None:
-        print "username is None. dunno wot 2 do :-??"
-        return redirect(url_for('showAll'))
+@app.route('/flipHidden', methods=['GET', 'POST'])
+def flipHidden():
+    if request.method != 'POST':
+        return redirect(url_for('home'))
 
-    person = db.session.query(Person).filter(Person.username == username).first()
+    person = db.session.query(Person).get(int(request.form['id']))
+
     person.hidden = not person.hidden
     db.session.commit()
-    return redirect(url_for('showAll'))
-
+    return redirect(url_for('home'))
 
 
 @app.route('/classifyGender/<string:username>')

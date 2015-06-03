@@ -11,8 +11,8 @@
     <h3>your profile was <strong>not</strong> found in the database.<br>if you think this is a mistake, try using your full name on your facebook profile, and then visit this page again.</h3>
 
     {% else %}
-    <h3>based on your facebook profile, some matches have been found (hopefully, your profile is amongst them).</h3>
-    <h3>you can use the <strong>hide</strong> option if you want your picture not to be used on this site anymore.<br>if you change your mind, you can always <strong>unhide</strong> it :-).</h3>
+    <h4>based on your facebook profile, some matches have been found (hopefully, your profile is amongst them).</h4>
+    <h4>you can use the <strong>hide</strong> option if you want your picture not to be used on this site anymore.<br>if you change your mind, you can always <strong>unhide</strong> it :-).</h4>
     <br>
     <table class="table table-hover">
         <thead>
@@ -27,11 +27,30 @@
         <tbody>
         {% for x in matches %}
             <tr class="{% if x[1].hidden %}danger{% else %}active{% endif %}">
-                <td>{{ x[1].id }}</td>
-                <td><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank">{{ x[1].username }}</a></td>
-                <td><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank"><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x[1].username }}/picture?width=300&height=300"></a></td>
-                <td>{% if not x[1].gender %}fe{% endif %}male</td>
-                <td>{{ x[1].hidden }} (<a href="{{ url_for('flipHidden', username=x[1].username) }}")><strong>{% if x[1].hidden %}unhide{% else %}hide{% endif %}</strong></a>)</td>
+                <td class="col-md-1">{{ x[1].id }}</td>
+                <td class="col-md-1"><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank">{{ x[1].username }}</a></td>
+                <td class="col-md-4"><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank"><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x[1].username }}/picture?width=300&height=300"></a></td>
+                <td class="col-md-1">{% if not x[1].gender %}fe{% endif %}male</td>
+                <td>
+                    <div class="col-md-5">
+                    <form action="{{ url_for('flipHidden') }}" method="POST">
+                        <input type="hidden" name="id" value="{{ x[1].id }}"></input>
+                        <div class="input-group">
+                            {% if not x[1].hidden %}
+                            <input type="text" class="form-control" value="{% if x[1].hidden %}hidden{% else %}shown{% endif %}" disabled></input>
+                            {% endif %}
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-{% if x[1].hidden %}primary{% else %}danger{% endif %}" type="submit">{% if x[1].hidden %}unhide{% else %}hide{% endif %}</button>
+                            </span>
+
+                            {% if x[1].hidden %}
+                            <input type="text" class="form-control" value="{% if x[1].hidden %}hidden{% else %}shown{% endif %}" disabled></input>
+                            {% endif %}
+                        </div>
+                    </form>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
