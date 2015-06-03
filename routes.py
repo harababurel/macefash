@@ -21,6 +21,7 @@ from stringSimilarity import getStringSimilarity
 
 from app import app
 from models import *
+import datetime
 import os
 
 authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
@@ -200,9 +201,22 @@ def flipHidden():
     if request.method != 'POST':
         return redirect(url_for('home'))
 
-    person = db.session.query(Person).get(int(request.form['id']))
+    author = request.form['author']
+    target = db.session.query(Person).get(int(request.form['id']))
+    action = 'unhide' if target.hidden else 'hide'
+    now = datetime.datetime.now()
 
-    person.hidden = not person.hidden
+    target.hidden = not target.hidden
+    db.session.add(
+            Takedown(
+                ip=getIP(),
+                author=author,
+                target=target.username,
+                action=action,
+                when=now
+                )
+            )
+
     db.session.commit()
     return redirect(url_for('home'))
 
@@ -312,6 +326,12 @@ def showVotes(page=None):
             )
 
 
+@app.route('/showTakedowns')
+@requiresAuth
+def showTakedowns():
+    return '<br>'.join([x.__repr__() for x in db.session.query(Takedown).all()])
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     try:
@@ -341,6 +361,7 @@ def login():
 
         return render_template(
                 'login.html',
+                author=realName,
                 matches=v,
                 totalVotes=getTotalVotes(),
                 uniqueVoters=getUniqueVoters(),

@@ -40,6 +40,7 @@
         <td>
             <form action="{{ url_for('flipHidden') }}" method="POST">
                 <input type="hidden" name="id" value="{{ x.id }}"></input>
+                <input type="hidden" name="author" value="{{ userIP }}"></input>
                 <div class="input-group">
                     {% if not x.hidden %}
                     <input type="text" class="form-control" value="{% if x.hidden %}hidden{% else %}shown{% endif %}" disabled></input>

@@ -126,3 +126,23 @@ class Preference(db.Model):
 
     def __repr__(self):
         return "ip %s wants:\n---> theme: <%s>\n---> gender: %r" % (self.ip, self.theme, self.gender)
+
+class Takedown(db.Model):
+    __tablename__ = 'takedown'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String, unique=False, nullable=False)
+    author = db.Column(db.String, unique=False, nullable=False)
+    target = db.Column(db.String, unique=False, nullable=False)
+    action = db.Column(db.String, unique=False, nullable=False)
+    when = db.Column(db.DateTime, unique=False, nullable=True)
+
+    def __init__(self, ip, author, target, action, when):
+        self.ip = ip
+        self.author = author
+        self.target = target
+        self.action = action
+        self.when = when
+
+    def __repr__(self):
+        return "%s chose to %s %s (%r)" % (self.author, self.action, self.target, self.when)

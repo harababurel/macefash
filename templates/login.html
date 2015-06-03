@@ -35,6 +35,7 @@
                     <div class="col-md-5">
                     <form action="{{ url_for('flipHidden') }}" method="POST">
                         <input type="hidden" name="id" value="{{ x[1].id }}"></input>
+                        <input type="hidden" name="author" value="{{ author }}"></input>
                         <div class="input-group">
                             {% if not x[1].hidden %}
                             <input type="text" class="form-control" value="{% if x[1].hidden %}hidden{% else %}shown{% endif %}" disabled></input>
