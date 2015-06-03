@@ -17,6 +17,7 @@ from ratingSystem import getNewRatings
 from voteSystem import processVote
 from drawSystem import drawChoices
 from getIP import getIP
+from stringSimilarity import getStringSimilarity
 
 from app import app
 from models import *
@@ -325,11 +326,24 @@ def login():
         if result.user:
             result.user.update()
 
-        
+        realName = result.user.name.upper()
+        v = []
+        for x in db.session.query(Person).filter(Person.fullname is not None).all():
+            facebookName = x.fullname.upper()
+
+            for letter in 'abcdefghijklmnopqrstuvwxyz'.upper():
+                if '%s.' % letter in facebookName:
+                    facebookName = facebookName.replace('%s.' % letter, '') # get rid of father's initials
+
+            nameSimilarity = getStringSimilarity(realName, facebookName)
+            if nameSimilarity > 0.5:
+                v.append((nameSimilarity, x))
+
+        v = sorted(v, reverse=True)[:3]
 
         return render_template(
                 'login.html',
-                result=result,
+                matches=v,
                 totalVotes=getTotalVotes(),
                 uniqueVoters=getUniqueVoters(),
                 currentTheme=getCurrentTheme(),

@@ -90,8 +90,8 @@ def generateDatabase():
                         fullname = fullname.replace('\xc4\x82', 'A')
                         fullname = fullname.replace('\xc3\x82', 'A')
                         fullname = fullname.replace('\xc3\x8e', 'I')
-
-
+                        if fullname[-1] == ' ':
+                            fullname = fullname[:-1]
 
                         school = 'cns/%s' % str(grade)+letter
                         gender = None

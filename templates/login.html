@@ -7,20 +7,36 @@
 {% block title %}login{{ howMany }}{% endblock %}
 {% block content %}
 
-    {% if result.error %}
-        <h2>error: {{ result.error.message }}</h2>
-    {% endif %}
+    {% if not matches %}
+    <h3>your profile was <strong>not</strong> found in the database.<br>if you think this is a mistake, try using your full name on your facebook profile, and then visit this page again.</h3>
 
-    {% if result.user %}
-        <h2>hi, <strong>{{ result.user.name }}</strong></h2>
-        <h2>your id is <strong>{{ result.user.id }}</strong></h2>
-        <h2>your email is <strong>{{ result.user.email }}</strong></h2>
-        <h2>your name is <strong>{{ result.user.name }}</strong></h2>
-        <h2>your username is <strong>{{ result.user.username }}</strong></h2>
-        <h2>your nickname is <strong>{{ result.user.nickname }}</strong></h2>
-        <h2>your link is <strong>{{ result.user.link }}</strong></h2>
-        <h2>your picture is <strong>{{ result.user.picture }}</strong></h2>
-        <h2>your bio is <strong>{{ result.user.bio }}</strong></h2>
+    {% else %}
+    <h3>based on your facebook profile, some matches have been found (hopefully, your profile is amongst them).</h3>
+    <h3>you can use the <strong>hide</strong> option if you want your picture not to be used on this site anymore.<br>if you change your mind, you can always <strong>unhide</strong> it :-).</h3>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>pic</th>
+                <th>gender</th>
+                <th>hidden</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for x in matches %}
+            <tr class="{% if x[1].hidden %}danger{% else %}active{% endif %}">
+                <td>{{ x[1].id }}</td>
+                <td><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank">{{ x[1].username }}</a></td>
+                <td><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank"><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x[1].username }}/picture?width=300&height=300"></a></td>
+                <td>{% if not x[1].gender %}fe{% endif %}male</td>
+                <td>{{ x[1].hidden }} (<a href="{{ url_for('flipHidden', username=x[1].username) }}")><strong>{% if x[1].hidden %}unhide{% else %}hide{% endif %}</strong></a>)</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
     {% endif %}
 
 {% endblock %}
