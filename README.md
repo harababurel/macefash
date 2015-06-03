@@ -4,7 +4,7 @@ personal FaceMash clone
 <hr>
 
 ## Inspiration
-[![The Social Network - Facemash Scene](The Social Network - Facemash Scene)](https://www.youtube.com/watch?v=b9jyEpCibYk)
+[![The Social Network - Facemash Scene](http://img.youtube.com/vi/b9jyEpCibYk/0.jpg)](https://www.youtube.com/watch?v=b9jyEpCibYk)
 
 ## Requirements
 You need to have `python2.7` installed (`python3.4` should probably require slight adjustments to the code), as well as `Flask`, `SQLAlchemy`, and [`authomatic`](http://peterhudec.github.io/authomatic/) (for the Facebook API).
