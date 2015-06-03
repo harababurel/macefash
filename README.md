@@ -3,11 +3,15 @@ personal FaceMash clone
 
 <hr>
 
+## Inspiration
+[![The Social Network - Facemash Scene](The Social Network - Facemash Scene)](https://www.youtube.com/watch?v=b9jyEpCibYk)
+
 ## Requirements
-You need to have `python2.7` installed (`python3.4` should probably require slight adjustments to the code), as well as `Flask` and `SQLAlchemy`.
+You need to have `python2.7` installed (`python3.4` should probably require slight adjustments to the code), as well as `Flask`, `SQLAlchemy`, and [`authomatic`](http://peterhudec.github.io/authomatic/) (for the Facebook API).
 
 ```console
 sudo apt-get install python2.7 python-flask python-flask-sqlalchemy
+sudo pip install authomatic
 ```
 
 This should be enough to get you covered. Additional tinkering might be necessary.

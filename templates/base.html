@@ -72,6 +72,7 @@
                   <li><a href="{{ url_for('showAll') }}">browse all entries</a></li>
                   <li><a href="{{ url_for('showVotes') }}">browse all votes</a></li>
                   <li><a href="{{ url_for('login') }}"><strong>take my picture down</strong></a></li>
+                  <li><a href="http://www.github.com/harababurel/macefash">contribute to this project</a></li>
                 </ul>
               </li>
               <p class="navbar-text"><span class="badge">{{ totalVotes if totalVotes else "no" }}</span> votes from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> unique voters{% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}</p>
