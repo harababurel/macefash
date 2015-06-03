@@ -65,12 +65,11 @@ def getCurrentTheme():
         themeName = db.session.query(Preference).filter(Preference.ip == getIP()).first().theme
         themeURL = db.session.query(Theme).filter(Theme.name == themeName).first().source
         themeBG = db.session.query(Theme).filter(Theme.name == themeName).first().background
+        currentTheme = (themeName, themeURL, themeBG)
     except:
-        themeName = 'Simplex'
-        themeURL = '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/simplex/bootstrap.min.css'
-        themeBG = 'subtle_white_feathers.png'
+        currentTheme = SETTINGS['defaultTheme']
 
-    return (themeName, themeURL, themeBG)
+    return currentTheme
 
 
 def getCurrentGender():
@@ -325,6 +324,8 @@ def login():
     if result:
         if result.user:
             result.user.update()
+
+        
 
         return render_template(
                 'login.html',

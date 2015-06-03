@@ -3,6 +3,7 @@ Defines the models upon which
 the database tables are based.
 """
 from app import db
+from settings import SETTINGS
 
 
 class Person(db.Model):
@@ -10,6 +11,7 @@ class Person(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
+    fullname = db.Column(db.String, unique=False, nullable=True)
     gender = db.Column(db.Boolean, unique=False, nullable=True)
     city = db.Column(db.String, unique=False, nullable=True)
     school = db.Column(db.String, unique=False, nullable=True)
@@ -26,17 +28,19 @@ class Person(db.Model):
     def __init__(
             self,
             username,
+            fullname=None,
             gender=None,
             city=None,
             school=None,
-            rating=1200.0,
-            maxRating=1200.0,
-            volatility=385.0,
+            rating=SETTINGS['baseRating'],
+            maxRating=SETTINGS['baseRating'],
+            volatility=SETTINGS['baseVolatility'],
             games=0,
             wins=0,
             hidden=False
             ):
         self.username = username
+        self.fullname = fullname
         self.gender = gender
         self.city = city
         self.school = school

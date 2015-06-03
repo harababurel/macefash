@@ -17,6 +17,7 @@ def generateSampleDatabase():
     persons = [
             Person(
                 username='zuck',
+                fullname='Mark Zuckerberg',
                 gender=True,
                 city='Palo Alto',
                 school='Harvard',
@@ -80,13 +81,14 @@ def generateDatabase():
                         #print "processing '%s'" % username[0]
                         already = db.session.query(Person).filter(Person.username == username[0]).first()
 
+                        fullname = findall(r'B?F?\s?(.+)http.+', x)[0]
                         school = 'cns/%s' % str(grade)+letter
                         gender = None
                         if x.split()[0] in 'BF':
                             gender = (x.split()[0] == 'B')
 
                         if already is None:
-                            db.session.add(Person(username=username[0], gender=gender, school=school))
+                            db.session.add(Person(username=username[0], fullname=fullname, gender=gender, school=school))
                             #print "----> added with: gender=%r, school=%s" % (gender, school)
                         else:
                             if gender is not None:

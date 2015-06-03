@@ -9,5 +9,12 @@ SETTINGS = {
         'consumer_key': '1636893603200226',
         'consumer_secret': '650a122a687e8e9baa444138bd31a692',
         'scope': ['email', 'public_profile', 'user_friends']
-        }
+        },
+    'baseRating': 1200.0,
+    'baseVolatility': 385.0,
+    'defaultTheme': (
+        'Simplex',
+        '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/simplex/bootstrap.min.css',
+        'subtle_white_feathers.png'
+        )
 }
