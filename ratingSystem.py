@@ -38,6 +38,11 @@ def getNewRatings(currentPlayer, players):
     if 2500 < currentPlayer.rating:
         weight *= 0.8
 
+    if 50 <= currentPlayer.games and currentPlayer.games <= 100:
+        weight *= 0.8
+    if 100 < currentPlayer.games:
+        weight *= 0.6
+
     cap = 150.0 + 1500.0 / (currentPlayer.games + 2.0)
 
     newRating = (currentPlayer.rating + weight * performedAsRating) / (weight + 1.0)
