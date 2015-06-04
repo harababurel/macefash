@@ -73,7 +73,7 @@ class Vote(db.Model):
         self.spam = spam
 
     def __repr__(self):
-        return "%s voted (%s, %s)" % (self.ip, self.winner, self.loser, self.when)
+        return "%s voted (%s, %s)" % (self.ip, self.winner, self.loser)
 
 
 class Message(db.Model):
