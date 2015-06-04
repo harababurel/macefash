@@ -4,6 +4,7 @@ Also contains most of the project's functionality.
 """
 from flask import Flask, render_template, redirect, url_for, \
                   request, make_response, session, flash, Response
+from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
 from authomatic.adapters import WerkzeugAdapter
@@ -24,7 +25,10 @@ from models import *
 import datetime
 import os
 
+app.debug = SETTINGS['debug']
 authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
+toolbar = DebugToolbarExtension(app)
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 
 def checkAuth(username, password):
@@ -83,23 +87,28 @@ def getCurrentGender():
 
 
 def getTotalVotes():
+    totalVotes = db.session.query(Vote).count()
+    if 1000 <= totalVotes and totalVotes < 1000000:
+        return '%.1fk' % (totalVotes/1000.0)
+    if 1000000 <= totalVotes:
+        return '%.1f mil.' % (totalVotes/1000000.0)
+    return '%i' % totalVotes
+    """
     try:
         totalVotes = sum([x.wins for x in db.session.query(Person).filter(Person.hidden == False).all()])
     except:
         totalVotes = None
     return totalVotes
+    """
 
 
 def getUniqueVoters():
+    return 0
     try:
         uniqueVoters = len(set([x.ip for x in db.session.query(Vote).all()]))
     except:
         uniqueVoters = None
     return uniqueVoters
-
-
-def getGenderCount(gender):
-    return len(Person.query.filter(Person.gender == gender).all())
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -124,9 +133,6 @@ def home():
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             userIP=getIP()
             )
 
@@ -189,9 +195,6 @@ def genderHelp():
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             percentage=percentage
             )
 
@@ -256,9 +259,6 @@ def showTop(gender=None):
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             userIP=getIP()
             )
 
@@ -288,9 +288,6 @@ def showAll(page=None):
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             userIP=getIP()
             )
 
@@ -319,9 +316,6 @@ def showVotes(page=None):
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             userIP=getIP()
             )
 
@@ -367,9 +361,6 @@ def login():
                 uniqueVoters=getUniqueVoters(),
                 currentTheme=getCurrentTheme(),
                 themes=getThemes(),
-                girls=getGenderCount(False),
-                boys=getGenderCount(True),
-                ungendered=getGenderCount(None),
                 userIP=getIP()
                 )
     return response
@@ -382,10 +373,7 @@ def pageNotFound(e):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
-            themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None)
+            themes=getThemes()
             ), 404
 
 
@@ -397,9 +385,6 @@ def about():
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
             themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None),
             userIP=getIP()
             )
 
@@ -411,8 +396,5 @@ def pageNotFound(e):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
-            themes=getThemes(),
-            girls=getGenderCount(False),
-            boys=getGenderCount(True),
-            ungendered=getGenderCount(None)
+            themes=getThemes()
             ), 404

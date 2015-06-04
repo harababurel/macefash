@@ -53,9 +53,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">gender<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li{% if currentGender==False %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=0) }}">gurls ({{ girls }})</a></li>
-                  <li{% if currentGender==True %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=1) }}">bwoys ({{ boys }})</a></li>
-                  <li class="disabled"><a href="#" style="pointer-events: none;">unclassified ({{ ungendered }})</a></li>
+                  <li{% if currentGender==False %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=0) }}">gurls</a></li>
+                  <li{% if currentGender==True %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=1) }}">bwoys</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -75,7 +74,13 @@
                   <li><a href="http://www.github.com/harababurel/macefash" target="_blank">contribute to this project</a></li>
                 </ul>
               </li>
-              <p class="navbar-text"><span class="badge">{{ totalVotes if totalVotes else "no" }}</span> votes from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> unique voters{% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}</p>
+              <p class="navbar-text">
+                <span class="badge">{{ totalVotes if totalVotes else "???" }}</span> votes so far...
+                <!--
+                from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> unique voters
+                -->
+                {% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}
+              </p>
             </ul>
 
           </div><!-- /.navbar-collapse -->
