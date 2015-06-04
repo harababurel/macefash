@@ -17,8 +17,7 @@ You need to have `python2.7` installed (`python3.4` should probably require slig
 
 ```console
 sudo apt-get install python2.7 python-flask python-flask-sqlalchemy
-sudo pip install authomatic
-sudo pip install flask-debugtoolbar
+sudo pip install authomatic flask-debugtoolbar Flask-Cache
 ```
 
 This should be enough to get you covered. Additional tinkering might be necessary.

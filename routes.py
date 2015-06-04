@@ -6,6 +6,7 @@ from flask import Flask, render_template, redirect, url_for, \
                   request, make_response, session, flash, Response
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.cache import Cache
 from sqlalchemy import and_, or_
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
@@ -27,6 +28,7 @@ import os
 
 app.debug = SETTINGS['debug']
 authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 toolbar = DebugToolbarExtension(app)
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
@@ -243,6 +245,7 @@ def classifyGender(username=None, newGender=None):
 
 
 @app.route('/top/<int:gender>')
+@cache.cached(timeout=500)
 def showTop(gender=None):
     if gender is None or not gender in range(2):
         return redirect(url_for('home'))
@@ -265,6 +268,7 @@ def showTop(gender=None):
 @app.route('/all')
 @app.route('/all/<int:page>')
 @requiresAuth
+@cache.cached(timeout=500)
 def showAll(page=None):
     if page is None:
         page = 1
@@ -378,6 +382,7 @@ def pageNotFound(e):
 
 
 @app.route('/about')
+@cache.cached(timeout=500)
 def about():
     return render_template(
             'about.html',
