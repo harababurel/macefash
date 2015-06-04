@@ -9,7 +9,7 @@ personal FaceMash clone
 ## Live version
 The platform is currently running [here](http://macefash.ngrok.io/).
 
-![vote page](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote_cyborg.png)
+![vote page](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote_cyborg_no_ip.png)
 
 
 ## Requirements
