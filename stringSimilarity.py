@@ -4,6 +4,7 @@ according to the Damerau-Levenshtein distance function.
 Purpose: when some user logs in with facebook and wants their picture taken down,
 this method helps find the database entry which best matches said user's facebook name.
 """
+from random import shuffle
 
 """
 lmax = 100
@@ -65,7 +66,14 @@ def DamerauLevenshtein(a, b):
 
 
 def getStringSimilarity(a, b):
-    distance = DamerauLevenshtein(a, b)
+    bestDistance = 10**9
     maxLength = max(len(a), len(b))
 
-    return float(maxLength - distance) / maxLength
+    for _ in range(0, 10):
+        distance = DamerauLevenshtein(a, b)
+        bestDistance = min(bestDistance, distance)
+
+        a = ' '.join(shuffle(a.split())) # tries a few random permutations of each name
+        b = ' '.join(shuffle(b.split())) # increasing the probability that they will match
+
+    return float(maxLength - bestDistance) / maxLength
