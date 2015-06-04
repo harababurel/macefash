@@ -68,12 +68,12 @@ def DamerauLevenshtein(a, b):
 def getStringSimilarity(a, b):
     bestDistance = 10**9
     maxLength = max(len(a), len(b))
+    a, b = a.split(), b.split()
 
     for _ in range(0, 10):
-        distance = DamerauLevenshtein(a, b)
-        bestDistance = min(bestDistance, distance)
+        bestDistance = min(bestDistance, DamerauLevenshtein(' '.join(a), ' '.join(b)))
 
-        a = ' '.join(shuffle(a.split())) # tries a few random permutations of each name
-        b = ' '.join(shuffle(b.split())) # increasing the probability that they will match
+        shuffle(a) # tries a few random permutations of each name
+        shuffle(b) # increasing the probability that they will match
 
     return float(maxLength - bestDistance) / maxLength
