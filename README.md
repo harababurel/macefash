@@ -38,7 +38,7 @@ python main.py
 
 The port can be changed in the last line of the file:
 ```python
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, threaded=True, debug=False)
 ```
 Using the `debug=True` flag is **not** recommended for production use.
 
