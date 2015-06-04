@@ -14,7 +14,7 @@
 
         <div class="col-md-5">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{ L.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ (L.rating-800)/11 }}%; min-width: 2em; display:block; float:right;">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ L.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(L.rating-800)*(95/800.0) }}%; min-width: 2em; display:block; float:right;">
                     <span>{{ ratingL }}</span>
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
         <div class="col-md-5">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{ R.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ (R.rating-800)/11 }}%; min-width: 2em;">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ R.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(R.rating-800)*(95/800.0) }}%; min-width: 2em;">
                     <span>{{ ratingR }}</span>
                 </div>
             </div>
