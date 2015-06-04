@@ -244,7 +244,7 @@ def showTop(gender=None):
     if gender is None or not gender in range(2):
         return redirect(url_for('home'))
 
-    entries = sorted(db.session.query(Person).filter(Person.gender == gender).all(), key=lambda x: x.rating, reverse=True)[:15]
+    entries = sorted(db.session.query(Person).filter(and_(Person.gender == gender, Person.hidden == False)).all(), key=lambda x: x.rating, reverse=True)[:15]
     pics = [SETTINGS['basePic'] % (x.username, 400, 400) for x in entries]
 
     return render_template(
