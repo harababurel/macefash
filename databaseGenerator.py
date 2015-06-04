@@ -66,6 +66,7 @@ def generateSampleDatabase():
 def generateDatabase():
     db.create_all()
 
+    newAdded = 0
     for grade in range(9, 13):
         for letter in 'abcdefghi':
             with open('static/cns/%s' % str(grade)+letter, 'r') as f:
@@ -100,6 +101,7 @@ def generateDatabase():
 
                         if already is None:
                             db.session.add(Person(username=username[0], fullname=fullname, gender=gender, school=school))
+                            newAdded += 1
                             #print "----> added with: gender=%r, school=%s" % (gender, school)
                         else:
                             if gender is not None:
@@ -131,6 +133,7 @@ def generateDatabase():
         if db.session.query(Theme).filter(Theme.name == x.name).first() is None:
             db.session.add(x)
 
+    print "added %i new people." % newAdded
     db.session.commit()
 
 if __name__ == '__main__':
