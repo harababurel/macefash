@@ -89,25 +89,21 @@ def getCurrentGender():
 
 
 def getTotalVotes():
-    totalVotes = db.session.query(Vote).count()
+    try:
+        totalVotes = db.session.query(Vote).filter(Vote.spam == False).count()
+    except:
+        totalVotes = 0
+
     if 1000 <= totalVotes and totalVotes < 1000000:
         return '%.1fk' % (totalVotes/1000.0)
     if 1000000 <= totalVotes:
         return '%.1f mil.' % (totalVotes/1000000.0)
     return '%i' % totalVotes
-    """
-    try:
-        totalVotes = sum([x.wins for x in db.session.query(Person).filter(Person.hidden == False).all()])
-    except:
-        totalVotes = None
-    return totalVotes
-    """
 
 
 def getUniqueVoters():
-    return 0
     try:
-        uniqueVoters = len(set([x.ip for x in db.session.query(Vote).all()]))
+        uniqueVoters = db.session.query(Vote).distinct(Vote.ip).group_by(Vote.ip).count()
     except:
         uniqueVoters = None
     return uniqueVoters

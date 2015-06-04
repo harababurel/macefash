@@ -75,10 +75,7 @@
                 </ul>
               </li>
               <p class="navbar-text">
-                <span class="badge">{{ totalVotes if totalVotes else "???" }}</span> votes so far...
-                <!--
-                from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> unique voters
-                -->
+                <span class="badge">{{ totalVotes if totalVotes else "???" }}</span> votes so far from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> voters.
                 {% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}
               </p>
             </ul>
