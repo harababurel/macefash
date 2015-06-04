@@ -354,10 +354,10 @@ def login():
                     facebookName = facebookName.replace('%s.' % letter, '') # get rid of father's initials
 
             nameSimilarity = getStringSimilarity(realName, facebookName)
-            if nameSimilarity > 0.5:
+            if nameSimilarity > 0.6:
                 v.append((nameSimilarity, x))
 
-        v = sorted(v, reverse=True)[:3]
+        v = sorted(v, reverse=True)[:2]
 
         return render_template(
                 'login.html',
