@@ -44,7 +44,7 @@ def processVote(form):
         #print "user <%s> is spamming votes for <%s>" % (getIP(), players[0].username)
         return
 
-    print "VOTE:\n    who: <%s>\n    winner: <%s>\n    loser: <%s>" % (getIP(), players[0].username, players[1].username)
+    print "vote:\n    who:    <%s>\n    winner: <%s>\n    loser:  <%s>" % (getIP(), players[0].username, players[1].username)
 
     newStats = {}
 
