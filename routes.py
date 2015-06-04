@@ -245,7 +245,7 @@ def classifyGender(username=None, newGender=None):
 
 
 @app.route('/top/<int:gender>')
-@cache.cached(timeout=500)
+@cache.cached(timeout=50)
 def showTop(gender=None):
     if gender is None or not gender in range(2):
         return redirect(url_for('home'))
@@ -268,7 +268,7 @@ def showTop(gender=None):
 @app.route('/all')
 @app.route('/all/<int:page>')
 @requiresAuth
-@cache.cached(timeout=500)
+@cache.cached(timeout=50)
 def showAll(page=None):
     if page is None:
         page = 1
@@ -382,7 +382,7 @@ def pageNotFound(e):
 
 
 @app.route('/about')
-@cache.cached(timeout=500)
+@cache.cached(timeout=50)
 def about():
     return render_template(
             'about.html',
