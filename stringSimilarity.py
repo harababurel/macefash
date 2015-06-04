@@ -70,7 +70,7 @@ def getStringSimilarity(a, b):
     maxLength = max(len(a), len(b))
     a, b = a.split(), b.split()
 
-    for _ in range(0, 10):
+    for _ in range(0, 5):
         bestDistance = min(bestDistance, DamerauLevenshtein(' '.join(a), ' '.join(b)))
 
         shuffle(a) # tries a few random permutations of each name
