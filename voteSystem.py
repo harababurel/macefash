@@ -61,7 +61,17 @@ def processVote(form):
 
     # firstly, get new ratings (without altering anything) for all players
     for currentPlayer in players:
-        newStats[currentPlayer] = getNewRatings(currentPlayer, players)
+        dummyPlayer = Person(
+                username="%s2"%currentPlayer.username,
+                rating=currentPlayer.rating,
+                maxRating=currentPlayer.maxRating,
+                volatility=currentPlayer.volatility,
+                games=currentPlayer.games,
+                wins=currentPlayer.wins
+                )
+
+
+        newStats[currentPlayer] = getNewRatings(dummyPlayer, players)
 
     # secondly, update all ratings based on computed values
     for currentPlayer in players:

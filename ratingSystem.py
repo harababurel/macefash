@@ -58,5 +58,5 @@ def getNewRatings(currentPlayer, players):
 
     newVolatility = sqrt(((newRating - currentPlayer.rating)**2.0) / weight + (currentPlayer.volatility**2.0) / (weight + 1.0))
 
-    print "newRating: %.2f\nnewVolatility: %.2f" % (newRating, newVolatility)
+    print "<%s>: %.0f -> %.0f (%s%.0f)" % (currentPlayer.username, currentPlayer.rating, newRating, '-+'[currentPlayer.rating < newRating], abs(newRating - currentPlayer.rating))
     return {'newRating':newRating, 'newVolatility':newVolatility}
