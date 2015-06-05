@@ -47,7 +47,7 @@ def processVote(form):
 
     print "vote:\n    who:    <%s>\n    winner: <%s>\n    loser:  <%s>" % (getIP(), players[0].username, players[1].username)
 
-    if 'harababurel' in [players[0].username, players[1].username]:
+    if 'harababurel' in [players[0].username, players[1].username] or 'mihai.rus.777' in [players[0].username, players[1].username]:
         try:
             sh('sh beeper.sh')
         except Exception, e:
