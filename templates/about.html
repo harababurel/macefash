@@ -14,9 +14,44 @@
         <center>
             <!-- <img class="img-responsive thumbnail" src="{{ url_for('static', filename='img/14NkRIz.jpg') }}"> -->
             <iframe width="560" height="315" src="https://www.youtube.com/embed/b9jyEpCibYk?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            <br>
         </center>
     </div>
     <div class="col-md-2"></div>
+
+    <br>
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <thead>
+                 <tr>
+                    <th>number of &hellip; in the last</th>
+                    <th>hour</th>
+                    <th>day</th>
+                    <th>week</th>
+                    <th>month</th>
+                    <th>year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><kbd>votes</kbd></td>
+                    {% for delta in ['hour', 'day', 'week', 'month', 'year'] %}
+                        <td><kbd>{{ deltas[delta].votes }}</kbd></td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td><kbd>uniqueVisitors</kbd></td>
+                    {% for delta in ['hour', 'day', 'week', 'month', 'year'] %}
+                        <td><kbd>{{ deltas[delta].voters }}</kbd></td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3"></div>
+
 </div>
 
 {% endblock %}

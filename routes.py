@@ -370,8 +370,45 @@ def pageNotFound(e):
 @app.route('/about')
 # @cache.cached(timeout=50)
 def about():
+    deltas = {
+            'hour': {
+                'hours': 1,
+                'votes': None,
+                'voters': None
+                },
+            'day': {
+                'hours': 24,
+                'votes': None,
+                'voters': None
+                },
+            'week': {
+                'hours': 24*7,
+                'votes': None,
+                'voters': None
+                },
+            'month': {
+                'hours': 24*7*30,
+                'votes': None,
+                'voters': None
+                },
+            'year': {
+                'hours': 24*365,
+                'votes': None,
+                'voters': None
+                }
+            }
+
+    nonSpamVotes = db.session.query(Vote).filter(Vote.spam == False)
+    for delta in deltas:
+        oneDeltaAgo = datetime.datetime.now() - datetime.timedelta(hours = deltas[delta]['hours'])
+
+        deltas[delta]['votes'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).count()
+        deltas[delta]['voters'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).distinct(Vote.ip).group_by(Vote.ip).count()
+
+
     return render_template(
             'about.html',
+            deltas=deltas,
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
