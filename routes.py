@@ -12,7 +12,6 @@ from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
 from functools import wraps
 from settings import SETTINGS
-from subprocess import Popen, PIPE
 from random import choice
 from redirectSolver import solveRedirect
 from ratingSystem import getNewRatings
@@ -20,11 +19,11 @@ from voteSystem import processVote
 from drawSystem import drawChoices
 from getIP import getIP
 from stringSimilarity import getStringSimilarity
+from basher import sh
 
 from app import app
 from models import *
 import datetime
-import os
 
 app.debug = SETTINGS['debug']
 authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
@@ -53,15 +52,6 @@ def requiresAuth(f):
                     )
         return f(*args, **kwargs)
     return decorated
-
-
-def sh(script):
-    """
-    Can run a bash script.
-    Not used, for the moment.
-    """
-    (out, err) = Popen(list(script.split()), stdout=PIPE).communicate()
-    return str(out)
 
 
 def getThemes():

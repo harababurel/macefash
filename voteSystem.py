@@ -8,6 +8,7 @@ from app import db
 from models import *
 from getIP import getIP
 from ratingSystem import getNewRatings
+from basher import sh
 import datetime
 
 def detectSpam(players):
@@ -45,6 +46,12 @@ def processVote(form):
         return
 
     print "vote:\n    who:    <%s>\n    winner: <%s>\n    loser:  <%s>" % (getIP(), players[0].username, players[1].username)
+
+    if 'harababurel' in [players[0].username, players[1].username]:
+        try:
+            sh('sh beeper.sh')
+        except Exception, e:
+            print "tried to execute beeper.sh, but something went wrong (err: %s" % e
 
     newStats = {}
 
