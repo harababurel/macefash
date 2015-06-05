@@ -12,10 +12,12 @@ def getWinProbability(comparedTo, currentPlayer):
     return 0.5 * (erf((comparedTo.rating - currentPlayer.rating) / sqrt(2.0 * (comparedTo.volatility**2.0 + currentPlayer.volatility**2.0))) + 1.0)
 
 
-def getNewRatings(currentPlayer, players):
+def getNewTCStyleRatings(currentPlayer, players):
     """
     Note: players should be sorted by rank.
     In the case of 2 players, their order should be [winner, loser].
+    IMPORTANT: Something is off. Ratings tend to converge and are
+    considerably more sensible to losing than to winning. 
     """
     averageRating = float(sum([x.rating for x in players])) / len(players)
 
@@ -60,3 +62,55 @@ def getNewRatings(currentPlayer, players):
 
     print "<%s>: %.0f -> %.0f (%s%.0f)" % (currentPlayer.username, currentPlayer.rating, newRating, '-+'[currentPlayer.rating < newRating], abs(newRating - currentPlayer.rating))
     return {'newRating':newRating, 'newVolatility':newVolatility}
+
+
+def getNewEloRatings(currentPlayer, players, verbose=True):
+    """
+    This is a more standard (and simple) approach to implementing the rating system.
+    """
+    otherPlayer = [x for x in players if x != currentPlayer][0]
+
+    expectedScore = 1.0 / (1.0 + 10.0**((otherPlayer.rating - currentPlayer.rating) / 400.0))
+    actualScore = (currentPlayer == players[0])
+
+    newRating = currentPlayer.rating + currentPlayer.volatility * (actualScore - expectedScore)
+
+    if newRating < 2100.0:
+        newVolatility = 200.0
+    elif 2100.0 <= newRating and newRating <= 2400.0:
+        newVolatility = 100.0
+    else:
+        newVolatility = 50.0
+
+    if verbose:
+        print "<%s>: %.0f -> %.0f (%s%.0f)" % (currentPlayer.username, currentPlayer.rating, newRating, '-+'[currentPlayer.rating < newRating], abs(newRating - currentPlayer.rating))
+    return {'newRating':newRating, 'newVolatility':newVolatility}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

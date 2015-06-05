@@ -14,7 +14,6 @@ from functools import wraps
 from settings import SETTINGS
 from random import choice
 from redirectSolver import solveRedirect
-from ratingSystem import getNewRatings
 from voteSystem import processVote
 from drawSystem import drawChoices
 from getIP import getIP

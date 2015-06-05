@@ -7,7 +7,7 @@ from settings import SETTINGS
 from app import db
 from models import *
 from getIP import getIP
-from ratingSystem import getNewRatings
+from ratingSystem import getNewEloRatings
 from basher import sh
 import datetime
 
@@ -28,9 +28,7 @@ def detectSpam(players):
         if timeDiff < SETTINGS['minVoteWait']:
             isSpam = True
         lastWasSpam = lastVote.spam
-
         #print "waited since last vote: %.2f" % timeDiff
-
 
     if not isSpam or (isSpam and not lastWasSpam):
         db.session.add(Vote(ip=who, winner=players[0].username, loser=players[1].username, when=now, spam=isSpam))
@@ -61,17 +59,7 @@ def processVote(form):
 
     # firstly, get new ratings (without altering anything) for all players
     for currentPlayer in players:
-        dummyPlayer = Person(
-                username="%s2"%currentPlayer.username,
-                rating=currentPlayer.rating,
-                maxRating=currentPlayer.maxRating,
-                volatility=currentPlayer.volatility,
-                games=currentPlayer.games,
-                wins=currentPlayer.wins
-                )
-
-
-        newStats[currentPlayer] = getNewRatings(dummyPlayer, players)
+        newStats[currentPlayer] = getNewEloRatings(currentPlayer, players)
 
     # secondly, update all ratings based on computed values
     for currentPlayer in players:
