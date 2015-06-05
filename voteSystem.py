@@ -51,7 +51,7 @@ def processVote(form):
         try:
             sh('sh beeper.sh')
         except Exception, e:
-            print "tried to execute beeper.sh, but something went wrong (err: %s" % e
+            print "tried to execute beeper.sh, but something went wrong (err: %s)" % e
 
     newStats = {}
 
