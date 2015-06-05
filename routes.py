@@ -398,9 +398,10 @@ def about():
                 }
             }
 
+    now = datetime.datetime.now()
     nonSpamVotes = db.session.query(Vote).filter(Vote.spam == False)
     for delta in deltas:
-        oneDeltaAgo = datetime.datetime.now() - datetime.timedelta(hours = deltas[delta]['hours'])
+        oneDeltaAgo = now - datetime.timedelta(hours = deltas[delta]['hours'])
 
         deltas[delta]['votes'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).count()
         deltas[delta]['voters'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).distinct(Vote.ip).group_by(Vote.ip).count()
