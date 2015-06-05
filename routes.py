@@ -400,11 +400,14 @@ def about():
 
     now = datetime.datetime.now()
     nonSpamVotes = db.session.query(Vote).filter(Vote.spam == False)
-    for delta in deltas:
+    for delta in ['year', 'month', 'week', 'day', 'hour']:
         oneDeltaAgo = now - datetime.timedelta(hours = deltas[delta]['hours'])
 
-        deltas[delta]['votes'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).count()
-        deltas[delta]['voters'] = nonSpamVotes.filter(Vote.when > oneDeltaAgo).distinct(Vote.ip).group_by(Vote.ip).count()
+        nonSpamVotes = nonSpamVotes.filter(Vote.when > oneDeltaAgo)
+        # ^progressively reduce list of votes; O(n) instead of O(n * number of different deltas)
+
+        deltas[delta]['votes'] = nonSpamVotes.count()
+        deltas[delta]['voters'] = nonSpamVotes.distinct(Vote.ip).group_by(Vote.ip).count()
 
 
     return render_template(
