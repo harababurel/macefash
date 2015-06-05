@@ -38,18 +38,22 @@ def getNewRatings(currentPlayer, players):
     if 2500 < currentPlayer.rating:
         weight *= 0.8
 
-    """
+
     if 50 <= currentPlayer.games and currentPlayer.games <= 100:
         weight *= 0.8
     if 100 < currentPlayer.games:
         weight *= 0.6
-    """
-    # ^this should not be necessary, considering that the cap takes the number of games into account
 
     cap = 150.0 + 1500.0 / (currentPlayer.games + 2.0)
 
     newRating = (currentPlayer.rating + weight * performedAsRating) / (weight + 1.0)
+    if abs(newRating - currentPlayer.rating) > cap:
+        if newRating > currentPlayer.rating:
+            newRating = currentPlayer.rating + cap
+        else:
+            newRating = currentPlayer.rating - cap
+
     newVolatility = sqrt(((newRating - currentPlayer.rating)**2.0) / weight + (currentPlayer.volatility**2.0) / (weight + 1.0))
 
-    #print "newRating: %.2f\nnewVolatility: %.2f" % (newRating, newVolatility)
+    print "newRating: %.2f\nnewVolatility: %.2f" % (newRating, newVolatility)
     return {'newRating':newRating, 'newVolatility':newVolatility}
