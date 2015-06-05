@@ -161,16 +161,16 @@ def genderHelp():
     note to self: and_(Person.gender is None, not Person.hidden) doesn't work
     """
     try:
-        remaining = list(db.session.query(Person).filter(and_(Person.gender == None, Person.hidden == False)).all())
-        entry = choice(remaining)
+        remaining = db.session.query(Person).filter(and_(Person.gender == None, Person.hidden == False))
+        entry = choice(remaining.all())
     except:
         print "no more genders to classify (probably)"
         return redirect(url_for('home'))
 
     pic = SETTINGS['basePic'] % (entry.username, 400, 400)
 
-    total = len([x for x in db.session.query(Person).all()])
-    classified = total - len(remaining)
+    total = db.session.query(Person).count()
+    classified = total - remaining.count()
 
     percentage = float("%.2f" % ((100.0 * classified) / total))
 
