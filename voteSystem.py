@@ -14,22 +14,26 @@ import datetime
 def detectSpam(players):
     who = getIP()
 
-    votes = db.session.query(Vote).filter(and_(Vote.ip == who, Vote.winner == players[0].username)).all()
-    lastVote = None
-    isSpam = False
-    now = datetime.datetime.now()
+    try:
+        lastVote = db.session.query(Vote).filter(and_(Vote.ip == who, Vote.winner == players[0].username)).order_by(Vote.id.desc()).first()
+    except:
+        lastVote = None
 
-    if votes:
-        lastVote = votes[-1]
+    isSpam = False
+    lastWasSpam = False
+    now = datetime.datetime.now()
 
     if lastVote:
         timeDiff = (now - lastVote.when).total_seconds()
         if timeDiff < SETTINGS['minVoteWait']:
             isSpam = True
+        lastWasSpam = lastVote.spam
 
         #print "waited since last vote: %.2f" % timeDiff
 
-    db.session.add(Vote(ip=who, winner=players[0].username, loser=players[1].username, when=now, spam=isSpam))
+
+    if not isSpam or (isSpam and not lastWasSpam):
+        db.session.add(Vote(ip=who, winner=players[0].username, loser=players[1].username, when=now, spam=isSpam))
     db.session.commit()
 
     return isSpam
