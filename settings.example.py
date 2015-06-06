@@ -7,6 +7,7 @@ SETTINGS = {
     'entriesOnPage': 30,
     'baseRating': 1700.0,
     'baseVolatility': 200.0,
+    'defaultGender': False,
     'debug': False,
     'fb': {
         'class_': oauth2.Facebook,
