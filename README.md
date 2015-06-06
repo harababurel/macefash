@@ -16,7 +16,8 @@ The platform is currently running [here](http://macefash.ngrok.io/).
 You need to have `python2.7` installed (`python3.4` should probably require slight adjustments to the code), as well as `Flask` (+ some plugins), `SQLAlchemy`, and [`authomatic`](http://peterhudec.github.io/authomatic/) (for the Facebook API).
 
 ```console
-sudo apt-get install python2.7 python-flask python-flask-sqlalchemy python-matplotlib python-numpy python-scipy
+sudo apt-get install python2.7 python-flask python-flask-sqlalchemy
+sudo pip install matplotlib numpy scipy
 sudo pip install authomatic flask-debugtoolbar Flask-Cache
 ```
 
