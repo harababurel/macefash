@@ -54,18 +54,16 @@ def requiresAuth(f):
 
 
 def getThemes():
-    return sorted(db.session.query(Theme).all(), key=lambda x: x.name)
+    return db.session.query(Theme).order_by(Theme.name).all()
 
 
 def getCurrentTheme():
     try:
         themeName = db.session.query(Preference).filter(Preference.ip == getIP()).first().theme
-        themeURL = db.session.query(Theme).filter(Theme.name == themeName).first().source
-        themeBG = db.session.query(Theme).filter(Theme.name == themeName).first().background
-        currentTheme = (themeName, themeURL, themeBG)
+        matchedTheme = db.session.query(Theme).filter(Theme.name == themeName).first()
+        currentTheme = (themeName, matchedTheme.source, matchedTheme.background)
     except:
         currentTheme = SETTINGS['defaultTheme']
-
     return currentTheme
 
 
@@ -73,15 +71,17 @@ def getCurrentGender():
     try:
         currentGender = Preference.query.filter(Preference.ip == getIP()).first().gender
     except:
-        currentGender = False
+        currentGender = SETTINGS['defaultGender']
     return currentGender
 
 
 def getGenderCount():
+    nonHiddenPersons = db.session.query(Person).filter(Person.hidden == False)
     return {
-            False: db.session.query(Person).filter(and_(Person.gender == False, Person.hidden == False)).count(),
-            True: db.session.query(Person).filter(and_(Person.gender == True, Person.hidden == False)).count()
+            False: nonHiddenPersons.filter(Person.gender == False).count(),
+            True: nonHiddenPersons.filter(Person.gender == True).count()
             }
+
 
 def getTotalVotes():
     try:
@@ -268,12 +268,14 @@ def showAll(page=None):
         page = 1
     onPage = SETTINGS['entriesOnPage']
 
-    entries = db.session.query(Person).all()
-    # entries = sorted(entries, key=lambda x: x.rating, reverse=True)
-    # shuffle(entries)
-    pages = len(entries) // onPage + (len(entries) % onPage != 0)
+    entriesCount = db.session.query(Person).count()
+    pages = entriesCount // onPage + (entriesCount % onPage != 0)
     firstNav, lastNav = max(1, page-3), min(page+3, pages)
-    shownEntries = entries[(page-1)*onPage: min(len(entries), page*onPage)]
+
+    firstEntryID = (page-1)*onPage + 1
+    lastEntryID = firstEntryID + onPage - 1
+
+    shownEntries = db.session.query(Person).filter(and_(firstEntryID <= Person.id, Person.id <= lastEntryID)).all()
 
     return render_template(
             'all.html',
@@ -299,10 +301,14 @@ def showVotes(page=None):
         page = 1
     onPage = SETTINGS['entriesOnPage']
 
-    entries = db.session.query(Vote).all()[::-1]
-    pages = len(entries) // onPage + (len(entries) % onPage != 0)
+    voteCount = db.session.query(Vote).count()
+    pages = voteCount // onPage + (voteCount % onPage != 0)
     firstNav, lastNav = max(1, page-3), min(page+3, pages)
-    shownEntries = entries[(page-1)*onPage: min(len(entries), page*onPage)]
+
+    lastVoteID = voteCount - (page-1) * onPage
+    firstVoteID = lastVoteID - onPage + 1
+
+    shownEntries = db.session.query(Vote).order_by(-Vote.id).filter(and_(firstVoteID <= Vote.id, Vote.id <= lastVoteID)).all()
 
     return render_template(
             'votes.html',
