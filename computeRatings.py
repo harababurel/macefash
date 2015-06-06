@@ -51,7 +51,7 @@ for x in db.session.query(Person).all():
 print 'done!'
 
 print 'fetching real world votes...',
-votes = db.session.query(Vote).filter(Vote.spam == False).all()
+votes = db.session.query(Vote).filter(Vote.spam == False).all()[:500]
 print 'done!'
 
 print 'simulating the vote process based on real world votes...',
@@ -85,11 +85,15 @@ print 'done!'
 print 'committing changes...',
 db.session.commit()
 print 'done!'
-
 print
-print 'all ratings were computed. good day to you! :D'
 
-print 'generating rating graphs'
+try:
+    assert(raw_input('do you also want to generate rating graphs? \'yes please\' to confirm: ') == 'yes please')
+except AssertionError:
+    print 'ok, i won\'t do anything then.'
+    exit(0)
+
+print 'generating rating graphs...',
 for x in toFollow:
     if len(toFollow[x]) < 3:
         continue
@@ -106,3 +110,6 @@ for x in toFollow:
     plt.ylabel('rating')
     plt.title('rating evolution of %s' % str(x))
     plt.savefig('static/graphs/%s.png' % str(x))
+print 'done!'
+
+print 'everything was computed. good day to you! :D'

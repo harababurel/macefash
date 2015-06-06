@@ -20,7 +20,7 @@
                 <td class="col-md-4"><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
                 <td class="col-md-7">
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ entries[i].rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(entries[i].rating-800)*(95/800.0) }}%; min-width: 2em; display:block;">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ entries[i].rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(entries[i].rating-800)/(2400.0-800)*90.0 }}%; min-width: 2em; display:block;">
                         <span>{{ entries[i].rating }}</span>
                     </div>
                 </td>
