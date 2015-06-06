@@ -90,7 +90,10 @@ def generateDatabase():
                         fullname = fullname.replace('\xc3\x81', 'A')
                         fullname = fullname.replace('\xc4\x82', 'A')
                         fullname = fullname.replace('\xc3\x82', 'A')
+                        fullname = fullname.replace('\xc3\x89', 'E')
                         fullname = fullname.replace('\xc3\x8e', 'I')
+                        fullname = fullname.replace('\xc3\x93', 'O')
+                        fullname = fullname.replace('\xc5\x90', 'O')
                         if fullname[-1] == ' ':
                             fullname = fullname[:-1]
 
