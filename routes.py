@@ -77,6 +77,12 @@ def getCurrentGender():
     return currentGender
 
 
+def getGenderCount():
+    return {
+            False: db.session.query(Person).filter(and_(Person.gender == False, Person.hidden == False)).count(),
+            True: db.session.query(Person).filter(and_(Person.gender == True, Person.hidden == False)).count()
+            }
+
 def getTotalVotes():
     try:
         totalVotes = db.session.query(Vote).filter(Vote.spam == False).count()
@@ -119,6 +125,7 @@ def home():
             uniqueVoters=getUniqueVoters(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             userIP=getIP()
             )
@@ -181,6 +188,7 @@ def genderHelp():
             uniqueVoters=getUniqueVoters(),
             currentGender=getCurrentGender(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             percentage=percentage
             )
@@ -246,6 +254,7 @@ def showTop(gender=None):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             userIP=getIP()
             )
@@ -276,6 +285,7 @@ def showAll(page=None):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             userIP=getIP()
             )
@@ -304,6 +314,7 @@ def showVotes(page=None):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             userIP=getIP()
             )
@@ -349,6 +360,7 @@ def login():
                 totalVotes=getTotalVotes(),
                 uniqueVoters=getUniqueVoters(),
                 currentTheme=getCurrentTheme(),
+                genderCount=getGenderCount(),
                 themes=getThemes(),
                 userIP=getIP()
                 )
@@ -362,6 +374,7 @@ def pageNotFound(e):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes()
             ), 404
 
@@ -415,6 +428,7 @@ def about():
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
             themes=getThemes(),
             userIP=getIP()
             )
