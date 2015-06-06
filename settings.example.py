@@ -5,8 +5,8 @@ SETTINGS = {
     'basePic': 'https://graph.facebook.com/%s/picture?width=%s&height=%s',
     'minVoteWait': 10.0, # time to wait between votes (in case of spam detection)
     'entriesOnPage': 30,
-    'baseRating': 1200.0,
-    'baseVolatility': 385.0,
+    'baseRating': 1700.0,
+    'baseVolatility': 200.0,
     'debug': False,
     'fb': {
         'class_': oauth2.Facebook,
