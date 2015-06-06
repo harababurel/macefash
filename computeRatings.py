@@ -51,7 +51,7 @@ for x in db.session.query(Person).all():
 print 'done!'
 
 print 'fetching real world votes...',
-votes = db.session.query(Vote).filter(Vote.spam == False).all()[:500]
+votes = db.session.query(Vote).filter(Vote.spam == False).all()
 print 'done!'
 
 print 'simulating the vote process based on real world votes...',
