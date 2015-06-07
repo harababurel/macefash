@@ -1,123 +1,153 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% block title %}macefash{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ currentTheme[1] }}" rel="stylesheet" media="screen">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <!-- PopAds.net Popunder Code for macefash.ngrok.io
-    <script type="text/javascript">
-      var _pop = _pop || [];
-      _pop.push(['siteId', 719418]);
-      _pop.push(['minBid', 0.000000]);
-      _pop.push(['popundersPerIP', 0]);
-      _pop.push(['delayBetween', 300]);
-      _pop.push(['default', false]);
-      _pop.push(['defaultPerDay', 0]);
-      _pop.push(['topmostLayer', false]);
-      (function() {
-        var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
-        var s = document.getElementsByTagName('script')[0]; 
-        pa.src = '//c1.popads.net/pop.js';
-        pa.onerror = function() {
-          var sa = document.createElement('script'); sa.type = 'text/javascript'; sa.async = true;
-          sa.src = '//c2.popads.net/pop.js';
-          s.parentNode.insertBefore(sa, s);
-        };
-        s.parentNode.insertBefore(pa, s);
-      })();
-    </script>
-    PopAds.net Popunder Code End -->
-  </head>
-  <body style="background: url({{ url_for('static', filename='img/bg/'+currentTheme[2]) }});">
-  <!-- facebook sdk -->
-      <script>
-      window.fbAsyncInit = function() {
-          FB.init({
-                  appId      : '1636893603200226',
-                  xfbml      : true,
-                  version    : 'v2.3'
-                  });
-          };
+    <head>
+        <title>{% block title %}macefash{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ currentTheme[1] }}" rel="stylesheet" media="screen">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+        <!-- PopAds.net Popunder Code for macefash.ngrok.io
+        <script type="text/javascript">
+          var _pop = _pop || [];
+          _pop.push(['siteId', 719418]);
+          _pop.push(['minBid', 0.000000]);
+          _pop.push(['popundersPerIP', 0]);
+          _pop.push(['delayBetween', 300]);
+          _pop.push(['default', false]);
+          _pop.push(['defaultPerDay', 0]);
+          _pop.push(['topmostLayer', false]);
+          (function() {
+            var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+            var s = document.getElementsByTagName('script')[0]; 
+            pa.src = '//c1.popads.net/pop.js';
+            pa.onerror = function() {
+              var sa = document.createElement('script'); sa.type = 'text/javascript'; sa.async = true;
+              sa.src = '//c2.popads.net/pop.js';
+              s.parentNode.insertBefore(sa, s);
+            };
+            s.parentNode.insertBefore(pa, s);
+          })();
+        </script>
+        PopAds.net Popunder Code End -->
+    </head>
+    <body style="background: url({{ url_for('static', filename='img/bg/'+currentTheme[2]) }});">
+        <!-- facebook sdk, not sure it's necessary -->
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                        appId      : '1636893603200226',
+                        xfbml      : true,
+                        version    : 'v2.3'
+                        });
+                };
+            (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <!-- /facebook sdk -->
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-      </script>
-  <!-- /facebook sdk -->
+        <div class="container">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{ url_for('home') }}" style="text-shadow: 2px 2px 2px #000000;">
+                            macefash <sup><span class="label label-default">CNS</span></sup>
+                        </a>
+                    </div>
 
-    <div class="container">
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('home') }}" style="text-shadow: 2px 2px 2px #000000;">macefash <sup><span class="label label-default">CNS</span></sup></a>
-          </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li {% block homeActive %}class="active"{% endblock %}>
+                                <a href="{{ url_for('home') }}">vote<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">top<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url_for('showTop', gender=0) }}">gurls</a></li>
+                                    <li><a href="{{ url_for('showTop', gender=1) }}">bwoys</a></li>
+                                </ul>
+                            </li>
+                            <li {% block aboutActive %}class="active"{% endblock %}><a href="{{ url_for('about') }}">about</a></li>
+                        </ul>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li {% block homeActive %}class="active"{% endblock %}><a href="{{ url_for('home') }}">vote<span class="sr-only">(current)</span></a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">top<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ url_for('showTop', gender=0) }}">gurls</a></li>
-                  <li><a href="{{ url_for('showTop', gender=1) }}">bwoys</a></li>
-                </ul>
-              </li>
-              <li {% block aboutActive %}class="active"{% endblock %}><a href="{{ url_for('about') }}">about</a></li>
-            </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <div class="search">
+                                    <input type="text" class="form-control input-sm" maxlength="40" placeholder="find someone">
+                                    <button type="submit" class="btn btn-primary btn-sm">search</button>
+                                </div>
+                            </li>
 
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">gender<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li{% if currentGender==False %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=0) }}">gurls ({{ genderCount[False] }})</a></li>
-                  <li{% if currentGender==True %} class="active"{% endif %}><a href="{{ url_for('setGender', gender=1) }}">bwoys ({{ genderCount[True] }})</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">theme<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  {% for theme in themes %}<li{% if theme.name == currentTheme[0] %} class="active"{% endif %}><a href="{{ url_for('setTheme', theme=theme.name) }}">{{ theme.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">more<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ url_for('genderHelp') }}">help us identify genders</a></li>
-                  <li><a href="{{ url_for('showAll') }}">browse all entries</a></li>
-                  <li><a href="{{ url_for('showVotes') }}">browse all votes</a></li>
-                  <li><a href="{{ url_for('login') }}"><strong>take my picture down</strong></a></li>
-                  <li><a href="http://www.github.com/harababurel/macefash" target="_blank">contribute to this project</a></li>
-                </ul>
-              </li>
-              <p class="navbar-text">
-                <span class="badge">{{ totalVotes if totalVotes else "???" }}</span> votes so far from <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span> voters.
-                {% if userIP %}<br><small>(connected as: {{ userIP }})</small>{% endif %}
-              </p>
-            </ul>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">gender<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li{% if currentGender==False %} class="active"{% endif %}>
+                                        <a href="{{ url_for('setGender', gender=0) }}">gurls ({{ genderCount[False] }})</a>
+                                    </li>
+                                    <li{% if currentGender==True %} class="active"{% endif %}>
+                                        <a href="{{ url_for('setGender', gender=1) }}">bwoys ({{ genderCount[True] }})</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">theme<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for theme in themes %}
+                                        <li{% if theme.name == currentTheme[0] %} class="active"{% endif %}>
+                                            <a href="{{ url_for('setTheme', theme=theme.name) }}">{{ theme.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    {% block content %}
-    {% endblock %}
-    <br>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">more<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url_for('genderHelp') }}">help us identify genders</a></li>
+                                    <li><a href="{{ url_for('showAll') }}">browse all entries</a></li>
+                                    <li><a href="{{ url_for('showVotes') }}">browse all votes</a></li>
+                                    <li><a href="{{ url_for('login') }}"><strong>take my picture down</strong></a></li>
+                                    <li><a href="http://www.github.com/harababurel/macefash" target="_blank">contribute to this project</a></li>
+                                </ul>
+                            </li>
 
-    <div class="col-md-3"></div>
-    <div class="col-md-5" style="border-top: 1px solid #{% if currentTheme[0] == 'Cyborg' %}555{% else %}ccc{% endif %};">
-        <p class="text-center">developed late at night by a team of <i>highly</i> trained <strong><a href="https://www.youtube.com/watch?v=6Jz0JcQYtqo" target="_blank">tarsiers</a></strong></p>
-    </div>
-    <div class="col-md-3"></div>
-  </body>
+                            <li class="navbar-text">
+                                <span class="badge">{{ totalVotes if totalVotes else "???" }}</span>
+                                votes so far from
+                                <span class="badge">{{ uniqueVoters if uniqueVoters else "???" }}</span>
+                                voters.
+                                {% if userIP %}
+                                    <br>
+                                    <small>(connected as: {{ userIP }})</small>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+            <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+            {% block content %}
+            {% endblock %}
+
+            <br>
+
+            <div class="col-md-3"></div>
+            <div class="col-md-5" style="border-top: 1px solid #{% if currentTheme[0] == 'Cyborg' %}555{% else %}ccc{% endif %};">
+                <p class="text-center">
+                    developed late at night by a team of <i>highly</i> trained
+                    <strong><a href="https://www.youtube.com/watch?v=6Jz0JcQYtqo" target="_blank">tarsiers</a></strong>
+                </p>
+            </div>
+            <div class="col-md-3"></div>
+      </body>
 </html>
-
