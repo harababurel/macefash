@@ -6,9 +6,9 @@ from app import db
 from models import *
 from ratingSystem import getNewEloRatings
 from settings import SETTINGS
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.interpolate import spline
+# import matplotlib.pyplot as plt
+# import numpy as np
+# from scipy.interpolate import spline
 
 
 print "WARNING: this is going to reset all ratings and recompute them from scratch."
@@ -87,6 +87,7 @@ db.session.commit()
 print 'done!'
 print
 
+"""
 try:
     assert(raw_input('do you also want to generate rating graphs? \'yes please\' to confirm: ') == 'yes please')
 except AssertionError:
@@ -111,5 +112,5 @@ for x in toFollow:
     plt.title('rating evolution of %s' % str(x))
     plt.savefig('static/graphs/%s.png' % str(x))
 print 'done!'
-
+"""
 print 'everything was computed. good day to you! :D'
