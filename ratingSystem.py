@@ -82,35 +82,8 @@ def getNewEloRatings(currentPlayer, players, verbose=True):
     else:
         newVolatility = 50.0
 
+    newVolatility = min(newVolatility, 10000.0 / max(1.0, currentPlayer.games))
+
     if verbose:
         print "<%s>: %.0f -> %.0f (%s%.0f)" % (currentPlayer.username, currentPlayer.rating, newRating, '-+'[currentPlayer.rating < newRating], abs(newRating - currentPlayer.rating))
     return {'newRating':newRating, 'newVolatility':newVolatility}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
