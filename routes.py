@@ -329,7 +329,7 @@ def showVotes(page=None):
 @app.route('/showTakedowns')
 @requiresAuth
 def showTakedowns():
-    return '<br>'.join([x.__repr__() for x in db.session.query(Takedown).all()])
+    return '<br>'.join([x.__repr__() for x in db.session.query(Takedown).all()[::-1]])
 
 
 @app.route('/login', methods=['GET', 'POST'])
