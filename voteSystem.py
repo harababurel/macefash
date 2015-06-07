@@ -15,20 +15,27 @@ def detectSpam(players):
     who = getIP()
 
     try:
-        lastVote = db.session.query(Vote).filter(and_(Vote.ip == who, Vote.winner == players[0].username)).order_by(Vote.id.desc()).first()
+        lastVoteSameResult = db.session.query(Vote).filter(Vote.ip == who).filter(and_(Vote.winner == players[0].username, Vote.loser == players[1].username)).order_by(Vote.id.desc()).first()
     except:
-        lastVote = None
+        lastVoteSameResult = None
+
+    try:
+        lastVoteInvertedResult = db.session.query(Vote).filter(Vote.ip == who).filter(and_(Vote.winner == players[1].username, Vote.loser == players[0].username)).order_by(Vote.id.desc()).first()
+    except:
+        lastVoteInvertedResult = None
 
     isSpam = False
     lastWasSpam = False
     now = datetime.datetime.now()
 
-    if lastVote:
-        timeDiff = (now - lastVote.when).total_seconds()
-        if timeDiff < SETTINGS['minVoteWait']:
-            isSpam = True
-        lastWasSpam = lastVote.spam
-        #print "waited since last vote: %.2f" % timeDiff
+    for lastVote in [lastVoteSameResult, lastVoteInvertedResult]:
+        if lastVote:
+            timeDiff = (now - lastVote.when).total_seconds()
+            if timeDiff < SETTINGS['minVoteWait']:
+                isSpam = True
+            if lastVote.spam:
+                lastWasSpam = True
+            #print "waited since last vote: %.2f" % timeDiff
 
     if not isSpam or (isSpam and not lastWasSpam):
         db.session.add(Vote(ip=who, winner=players[0].username, loser=players[1].username, when=now, spam=isSpam))
