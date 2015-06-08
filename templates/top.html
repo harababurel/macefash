@@ -17,7 +17,7 @@
         {% for i in range(0, howMany) %}
             <tr class="active">
                 <td class="col-md-1"><strong>{{ i+1 }}</strong></td>
-                <td class="col-md-4"><img src="{% if i+1 == 1 and entries[0].gender == False %}https://graph.facebook.com/julia.kadar.1/picture?width=400&height=400{% else %}{{ pics[i] }}{% endif %}" height="300" width="300" class="thumbnail"></td>
+                <td class="col-md-4"><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
                 <td class="col-md-7">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="{{ entries[i].rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(entries[i].rating-800)/(2400.0-800)*90.0 }}%; min-width: 2em; display:block;">
