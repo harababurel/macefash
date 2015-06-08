@@ -9,8 +9,9 @@ personal FaceMash clone
 ## Live version
 The platform is currently running [here](http://macefash.ngrok.io/).
 
-![vote page](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote_cyborg_no_ip.png)
+![vote page on desktop](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote_cyborg_no_ip.png)
 
+![vote page mobile](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/iphone_6_6plus.png)
 
 ## Requirements
 You need to have `python2.7` installed (`python3.4` should probably require slight adjustments to the code), as well as `Flask` (+ some plugins), `SQLAlchemy`, and [`authomatic`](http://peterhudec.github.io/authomatic/) (for the Facebook API).
