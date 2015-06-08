@@ -25,7 +25,7 @@
             <form action="{{ url_for('home') }}", method="POST">
                 <input type="hidden" name="winner" value="{{ L.id }}"></input>
                 <input type="hidden" name="loser" value="{{ R.id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive pull-right thumbnail" src="{{ picL }}">
+                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ picL }}">
             </form>
         </div>
 
@@ -38,7 +38,7 @@
             <form action="{{ url_for('home') }}", method="POST">
                 <input type="hidden" name="winner" value="{{ R.id }}"></input>
                 <input type="hidden" name="loser" value="{{ L.id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive pull-left thumbnail" src="{{ picR }}">
+                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ picR }}">
             </form>
         </div>
     </div>

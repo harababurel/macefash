@@ -6,6 +6,7 @@
         <link href="{{ currentTheme[1] }}" rel="stylesheet" media="screen">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/local.css') }}">
         <!-- PopAds.net Popunder Code for macefash.ngrok.io
         <script type="text/javascript">
           var _pop = _pop || [];
@@ -51,17 +52,23 @@
         <!-- /facebook sdk -->
 
         <div class="container">
-            <nav class="navbar navbar-inverse">
+            <nav class="navbar navbar-default navbar-inverse">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="{{ url_for('home') }}" style="text-shadow: 2px 2px 2px #000000;">
                             macefash <sup><span class="label label-default">CNS</span></sup>
                         </a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li {% block homeActive %}class="active"{% endblock %}>
                                 <a href="{{ url_for('home') }}">vote<span class="sr-only">(current)</span></a>
@@ -76,16 +83,14 @@
                             <li {% block aboutActive %}class="active"{% endblock %}><a href="{{ url_for('about') }}">about</a></li>
                         </ul>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <!-- not ready for production
-                            <li>
-                                <div class="search">
-                                    <input type="text" class="form-control input-sm disabled" id="{{ currentTheme[0] }}" maxlength="40" placeholder="coming soon!">
-                                    <button type="submit" class="btn btn-primary btn-sm" id="{{ currentTheme[0] }}">search</button>
-                                </div>
-                            </li>
-                            -->
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm" id="{{ currentTheme[0] }}" maxlength="40" placeholder="coming soon!">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm" id="{{ currentTheme[0]}}">search</button>
+                        </form>
 
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">gender<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
