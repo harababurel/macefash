@@ -1,5 +1,4 @@
 @media(max-width: 992px) {
-    .girlentry {
-        float: none !important;
-    }
+    .girlentry { float: none !important; }
+    h3 { font-size: 14px; }
 }
