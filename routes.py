@@ -248,6 +248,8 @@ def showTop(gender=None):
     pics = [SETTINGS['basePic'] % (x.username, picSizes[i], picSizes[i]) for i, x in enumerate(entries)]
     grades = [getGradeEquivalent(x.rating) for x in entries]
 
+    print "user <%s> accessed the %s top" % (getIP(), ['girls', 'boys'][gender])
+
     return render_template(
             'top.html',
             entries=entries,
