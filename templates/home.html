@@ -17,30 +17,31 @@
         <div class="col-md-1"></div>
 
         <div class="col-md-5">
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{ choices['gradeL']*10.0 }}%; min-width: 2em; display:block; float:right;">
-                    <span><strong>{{ "%.1f" % choices['gradeL'] }}</strong><small>/10</small></span>
+            <div class="profile-pic-container">
+                <div class="grade-container">
+                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeL'] }}<small>/10</small></span>
                 </div>
+                <form action="{{ url_for('home') }}", method="POST" class="profile-pic-img profile-pic-img-{{ currentTheme[0] }}">
+                    <input type="hidden" name="winner" value="{{ choices['L'].id }}"></input>
+                    <input type="hidden" name="loser" value="{{ choices['R'].id }}"></input>
+                    <input type="image" action="submit" class="img-circle girlentry" src="{{ choices['picL'] }}">
+                </form>
             </div>
-            <form action="{{ url_for('home') }}", method="POST">
-                <input type="hidden" name="winner" value="{{ choices['L'].id }}"></input>
-                <input type="hidden" name="loser" value="{{ choices['R'].id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ choices['picL'] }}">
-            </form>
         </div>
 
         <div class="col-md-5">
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{ choices['gradeR']*10.0 }}%; min-width: 2em;">
-                    <span><strong>{{ "%.1f" % choices['gradeR'] }}</strong><small>/10</small></span>
+            <div class="profile-pic-container">
+                <div class="grade-container">
+                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeR'] }}<small>/10</small></span>
                 </div>
+                <form action="{{ url_for('home') }}", method="POST" class="profile-pic-img profile-pic-img-{{ currentTheme[0] }}">
+                    <input type="hidden" name="winner" value="{{ choices['R'].id }}"></input>
+                    <input type="hidden" name="loser" value="{{ choices['L'].id }}"></input>
+                    <input type="image" action="submit" class="img-circle girlentry" src="{{ choices['picR'] }}">
+                </form>
             </div>
-            <form action="{{ url_for('home') }}", method="POST">
-                <input type="hidden" name="winner" value="{{ choices['R'].id }}"></input>
-                <input type="hidden" name="loser" value="{{ choices['L'].id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ choices['picR'] }}">
-            </form>
         </div>
+
     </div>
 </div>
 {% endblock %}
