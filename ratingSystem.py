@@ -87,3 +87,8 @@ def getNewEloRatings(currentPlayer, players, verbose=True):
     if verbose:
         print "<%s>: %.0f -> %.0f (%s%.0f)" % (currentPlayer.username, currentPlayer.rating, newRating, '-+'[currentPlayer.rating < newRating], abs(newRating - currentPlayer.rating))
     return {'newRating':newRating, 'newVolatility':newVolatility}
+
+
+def getGradeEquivalent(rating):
+    grade = 10.0 * (rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
+    return min(10.0, max(1.0, grade))

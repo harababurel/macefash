@@ -16,6 +16,7 @@ from random import choice
 from redirectSolver import solveRedirect
 from voteSystem import processVote
 from drawSystem import drawChoices
+from ratingSystem import getGradeEquivalent
 from getIP import getIP
 from stringSimilarity import getStringSimilarity
 from basher import sh
@@ -240,10 +241,12 @@ def showTop(gender=None):
 
     entries = sorted(db.session.query(Person).filter(and_(Person.gender == gender, Person.hidden == False)).all(), key=lambda x: x.rating, reverse=True)[:20]
     pics = [SETTINGS['basePic'] % (x.username, 400, 400) for x in entries]
+    grades = [getGradeEquivalent(x.rating) for x in entries]
 
     return render_template(
             'top.html',
             entries=entries,
+            grades=grades,
             howMany=len(entries),
             pics=pics,
             totalVotes=getTotalVotes(),

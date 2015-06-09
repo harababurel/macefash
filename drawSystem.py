@@ -8,6 +8,7 @@ from app import db
 from models import *
 from settings import SETTINGS
 from redirectSolver import solveRedirect
+from ratingSystem import getGradeEquivalent
 
 
 def drawChoices(wantedGender):
@@ -27,17 +28,11 @@ def drawChoices(wantedGender):
     picL = SETTINGS['basePic'] % (L.username, 500, 500)
     picR = SETTINGS['basePic'] % (R.username, 500, 500)
 
-    gradeL = 10.0 * (L.rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
-    gradeR = 10.0 * (R.rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
-
-    gradeL = min(10.0, max(1.0, gradeL))
-    gradeR = min(10.0, max(1.0, gradeR))
-
     return {
             'L': L,
             'R': R,
             'picL': picL,
             'picR': picR,
-            'gradeL': gradeL,
-            'gradeR': gradeR
+            'gradeL': getGradeEquivalent(L.rating),
+            'gradeR': getGradeEquivalent(R.rating)
             }

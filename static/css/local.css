@@ -3,50 +3,6 @@
     h3 { font-size: 14px; }
 }
 
-/* Resize profile pics according to screen size */
-/*
-@media (min-width: 1200px) {
-    .profile-pic-img > input.img-circle {
-        width: 450px !important;
-        height: 450px !important;
-    }
-}
-
-@media (min-width: 992px) and (max-width: 1200px) {
-    .profile-pic-img > input.img-circle {
-        width: 350px !important;
-        height: 350px !important;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 992px) {
-    .profile-pic-img > input.img-circle {
-        width: 700px !important;
-        height: 700px !important;
-    }
-}
-@media (max-width: 768px) {
-    .profile-pic-img > input.img-circle {
-        width: 90% !important;
-        height: inherit !important;
-    }
-}
-
-@media (max-width: 992px) {
-    .profile-pic-img > input.img-circle {
-        width: 90% !important;
-        height: inherit !important;
-    }
-}
-
-@media (min-width: 992px) {
-    .profile-pic-img > input.img-circle {
-        width: 100% !important;
-        height: inherit !important;
-    }
-}
-*/
-
 /*
  * Profile image component, taken from http://bootsnipp.com/snippets/featured/profile-picture-with-badge
  */
@@ -55,11 +11,61 @@
     text-align: center;
 }
 
+/* this shows up in the vote page */
 .profile-pic-img > input.img-circle {
     border: 5px solid #51D2B7; /* default color - used for undefined themes */
     width: 100%;
     height: inherit;
 }
+
+/* this shows up in the top page */
+.profile-pic-img > img.img-circle {
+    width: 25%;
+    height: inherit;
+}
+
+.profile-pic-img-gold > img.img-circle {
+    border: 10px solid #FFD700;
+    width: 50%;
+    height: inherit;
+}
+
+.profile-pic-img-silver > img.img-circle {
+    border: 10px solid #C0C0C0;
+    width: 40%;
+    height: inherit;
+}
+
+.profile-pic-img-bronze > img.img-circle {
+    border: 10px solid #CD7F32;
+    width: 30%;
+    height: inherit;
+}
+
+
+@media (max-width: 992px) {
+    .profile-pic-img > img.img-circle {
+        width: 60%;
+        height: inherit;
+    }
+
+    .profile-pic-img-gold > img.img-circle {
+        width: 95%;
+        height: inherit;
+    }
+
+    .profile-pic-img-silver > img.img-circle {
+        width: 80%;
+        height: inherit;
+    }
+
+    .profile-pic-img-bronze > img.img-circle {
+        width: 70%;
+        height: inherit;
+    }
+}
+
+/* ^done */
 
 .profile-pic-img-Cyborg > input.img-circle {
     border: 5px solid #2a9fd6;

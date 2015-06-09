@@ -8,20 +8,18 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>rank</th>
-            <th>pic</th>
-            <th>rating</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for i in range(0, howMany) %}
             <tr class="active">
-                <td class="col-md-1"><strong>{{ i+1 }}</strong></td>
-                <td class="col-md-4"><img src="{{ pics[i] }}" height="300" width="300" class="thumbnail"></td>
-                <td class="col-md-7">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ entries[i].rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(entries[i].rating-800)/(2400.0-800)*90.0 }}%; min-width: 2em; display:block;">
-                        <span>{{ entries[i].rating }}</span>
+                <td class="col-md-11">
+                    <div class="profile-pic-container profile-pic-img profile-pic-img-{{ currentTheme[0] }}{% if i <= 2 %} profile-pic-img-{{ ['gold', 'silver', 'bronze'][i] }}{% endif %}">
+                        <div class="grade-container">
+                            <span class="label grade-label grade-label-{{ currentTheme[0] }}"><small>#{{ i+1 }}:</small> {{ "%.1f" % grades[i] }}<small>/10</small></span>
+                        </div>
+                        <img class="img-circle" src="{{ pics[i] }}">
                     </div>
                 </td>
             </tr>
