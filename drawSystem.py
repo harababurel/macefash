@@ -27,9 +27,17 @@ def drawChoices(wantedGender):
     picL = SETTINGS['basePic'] % (L.username, 500, 500)
     picR = SETTINGS['basePic'] % (R.username, 500, 500)
 
+    gradeL = 10.0 * (L.rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
+    gradeR = 10.0 * (R.rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
+
+    gradeL = min(10.0, max(1.0, gradeL))
+    gradeR = min(10.0, max(1.0, gradeR))
+
     return {
             'L': L,
             'R': R,
             'picL': picL,
-            'picR': picR
+            'picR': picR,
+            'gradeL': gradeL,
+            'gradeR': gradeR
             }

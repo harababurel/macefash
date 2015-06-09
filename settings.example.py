@@ -7,6 +7,8 @@ SETTINGS = {
     'entriesOnPage': 30,
     'baseRating': 1700.0,
     'baseVolatility': 200.0,
+    'gradeOneRating': 900.0, # the rating that you want to be associated to a 1/10 grade
+    'gradeTenRating': 2200.0, # the rating that you want to be associated to a 10/10 grade
     'defaultGender': False,
     'debug': False,
     'fb': {

@@ -18,27 +18,27 @@
 
         <div class="col-md-5">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{ L.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(L.rating-800)/(2400.0-800)*90.0 }}%; min-width: 2em; display:block; float:right;">
-                    <span>{{ ratingL }}</span>
+                <div class="progress-bar" role="progressbar" style="width: {{ choices['gradeL']*10.0 }}%; min-width: 2em; display:block; float:right;">
+                    <span><strong>{{ "%.1f" % choices['gradeL'] }}</strong><small>/10</small></span>
                 </div>
             </div>
             <form action="{{ url_for('home') }}", method="POST">
-                <input type="hidden" name="winner" value="{{ L.id }}"></input>
-                <input type="hidden" name="loser" value="{{ R.id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ picL }}">
+                <input type="hidden" name="winner" value="{{ choices['L'].id }}"></input>
+                <input type="hidden" name="loser" value="{{ choices['R'].id }}"></input>
+                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ choices['picL'] }}">
             </form>
         </div>
 
         <div class="col-md-5">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{ R.rating }}" aria-valuemin="0" aria-valuemax="4000" style="width: {{ 5+(R.rating-800)/(2400.0-800)*90.0 }}%; min-width: 2em;">
-                    <span>{{ ratingR }}</span>
+                <div class="progress-bar" role="progressbar" style="width: {{ choices['gradeR']*10.0 }}%; min-width: 2em;">
+                    <span><strong>{{ "%.1f" % choices['gradeR'] }}</strong><small>/10</small></span>
                 </div>
             </div>
             <form action="{{ url_for('home') }}", method="POST">
-                <input type="hidden" name="winner" value="{{ R.id }}"></input>
-                <input type="hidden" name="loser" value="{{ L.id }}"></input>
-                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ picR }}">
+                <input type="hidden" name="winner" value="{{ choices['R'].id }}"></input>
+                <input type="hidden" name="loser" value="{{ choices['L'].id }}"></input>
+                <input type="image" action="submit" class="col-xs5 img-responsive girlentry thumbnail" src="{{ choices['picR'] }}">
             </form>
         </div>
     </div>

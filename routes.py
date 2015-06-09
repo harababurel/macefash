@@ -115,12 +115,7 @@ def home():
 
     return render_template(
             'home.html',
-            L=choices['L'],
-            R=choices['R'],
-            picL=choices['picL'],
-            picR=choices['picR'],
-            ratingL=int(choices['L'].rating),
-            ratingR=int(choices['R'].rating),
+            choices=choices,
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentGender=getCurrentGender(),
