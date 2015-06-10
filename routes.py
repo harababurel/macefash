@@ -410,7 +410,7 @@ def about():
                 'voters': None
                 },
             'month': {
-                'hours': 24*7*30,
+                'hours': 24*30,
                 'votes': None,
                 'voters': None
                 },
