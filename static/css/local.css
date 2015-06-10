@@ -16,12 +16,14 @@
     border: 5px solid #51D2B7; /* default color - used for undefined themes */
     width: 100%;
     height: inherit;
+    box-shadow: 4px 4px 15px -4px #000;
 }
 
 /* this shows up in the top page */
 .profile-pic-img > img.img-circle {
     width: 25%;
     height: inherit;
+    box-shadow: 4px 4px 15px -4px #000;
 }
 
 .profile-pic-img-gold > img.img-circle {
