@@ -445,6 +445,19 @@ def about():
             )
 
 
+@app.route('/legal')
+def legal():
+    return render_template(
+            'legal.html',
+            totalVotes=getTotalVotes(),
+            uniqueVoters=getUniqueVoters(),
+            currentTheme=getCurrentTheme(),
+            genderCount=getGenderCount(),
+            themes=getThemes(),
+            userIP=getIP()
+            )
+
+
 @app.errorhandler(404)
 def pageNotFound(e):
     return render_template(

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}legal terms{% endblock %}
+
+{% block homeActive %}{% endblock %}
+{% block topActive %}{% endblock %}
+
+
+{% block content %}
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <blockquote class="blockquote-reverse">
+            <p>You're using my <strong><i>private</i></strong> and <strong><i>highly personal</i></strong> profile picture, which I certainly own. Surely that can't be legal, and you're going to hell for it.</p>
+            <footer>every hater out there</footer>
+        </blockquote>
+
+        <p>According to Facebook's <a href="https://www.facebook.com/legal/terms" target="_blank">Terms of Service</a>,</p>
+        <blockquote>
+            You own all of the content and information you post on Facebook, and you can control how it is shared through your privacy and application settings.
+        </blockquote>
+        <p>However,</p>
+        <blockquote>
+            1. For content that is covered by intellectual property rights, like photos and videos (IP content), <u>you specifically give us the following permission, subject to your privacy and application settings: you grant us a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use any IP content that you post on or in connection with Facebook (IP License)</u>. This IP License ends when you delete your IP content or your account unless your content has been shared with others, and they have not deleted it.
+        </blockquote>
+        <p>Additionally,</p>
+        <blockquote>
+            4. When you publish content or information using the Public setting, <u>it means that you are allowing everyone, including people off of Facebook, to access and use that information, and to associate it with you (i.e., your name and profile picture)</u>.
+        </blockquote>
+        <p>If, by any chance, you wish to <strong>have your picture taken down from this website</strong>, you can do the following:<p>
+        <ol>
+            <li>Access <a href="{{ url_for('login') }}">this page</a>.</li>
+            <li>Log in with your Facebook account.</li>
+            <li>The system will search the user database and allow you to set your profile as <strong>hidden</strong>. This means that your picture will not appear on the vote and top pages anymore.</li>
+            <li>You can always undo the operation, in case you wish to reappear at some later point in time.</li>
+        </ol>
+        </ol>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock %}
