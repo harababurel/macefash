@@ -1,7 +1,8 @@
 @media (max-width: 992px) {
     .girlentry { float: none !important; }
-    h3 { font-size: 14px; }
 }
+
+.header { font-size: 32px !important; }
 
 /*
  * Profile image component, taken from http://bootsnipp.com/snippets/featured/profile-picture-with-badge
