@@ -9,6 +9,7 @@ from models import *
 from settings import SETTINGS
 from redirectSolver import solveRedirect
 from ratingSystem import getGradeEquivalent
+from facebookIdSolver import getIdFromUsername
 
 
 def drawChoices(wantedGender):
@@ -25,8 +26,8 @@ def drawChoices(wantedGender):
     # picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
     # picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
     # ^the solveRedirect method is EXTREMELY slow
-    picL = SETTINGS['basePic'] % (L.username, 500, 500)
-    picR = SETTINGS['basePic'] % (R.username, 500, 500)
+    picL = SETTINGS['basePic'] % (getIdFromUsername(L.username), 500, 500)
+    picR = SETTINGS['basePic'] % (getIdFromUsername(R.username), 500, 500)
 
     return {
             'L': L,

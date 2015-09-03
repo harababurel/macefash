@@ -5,6 +5,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from app import db
 from models import *
+
 from re import findall
 
 
