@@ -12,4 +12,4 @@ def getIdFromUsername(username):
         if r.status_code == 200 and r.reason == 'OK' and 'success' in r.url:
             return ''.join([x for x in r.url if '0' <= x and x <= '9'])
     except:
-        return "Could not get ID from username"
+        return None

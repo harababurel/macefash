@@ -13,7 +13,7 @@ from facebookIdSolver import getIdFromUsername
 
 
 def drawChoices(wantedGender):
-    pool = sorted(db.session.query(Person).filter(and_(Person.gender == wantedGender, Person.hidden == False)).all(), key=lambda x: x.games)
+    pool = sorted(db.session.query(Person).filter(and_(Person.gender == wantedGender, Person.hidden == False, Person.facebookId != None)).all(), key=lambda x: x.games)
     L, R = sample(pool[:50], 2) # at first, choices are selected from the least voted persons
     if randint(1, 2) == 1:      # in order to guarantee variety, each choice has a 50% chance
         L = choice(pool)        # of being re-chosen from the entire person pool
@@ -26,8 +26,8 @@ def drawChoices(wantedGender):
     # picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
     # picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
     # ^the solveRedirect method is EXTREMELY slow
-    picL = SETTINGS['basePic'] % (getIdFromUsername(L.username), 500, 500)
-    picR = SETTINGS['basePic'] % (getIdFromUsername(R.username), 500, 500)
+    picL = SETTINGS['basePic'] % (L.facebookId, 500, 500)
+    picR = SETTINGS['basePic'] % (R.facebookId, 500, 500)
 
     return {
             'L': L,

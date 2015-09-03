@@ -11,6 +11,7 @@ class Person(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
+    facebookId = db.Column(db.String, unique=True, nullable=True)
     fullname = db.Column(db.String, unique=False, nullable=True)
     gender = db.Column(db.Boolean, unique=False, nullable=True)
     city = db.Column(db.String, unique=False, nullable=True)
@@ -28,6 +29,7 @@ class Person(db.Model):
     def __init__(
             self,
             username,
+            facebookId=None,
             fullname=None,
             gender=None,
             city=None,
@@ -40,6 +42,7 @@ class Person(db.Model):
             hidden=False
             ):
         self.username = username
+        self.facebookId = facebookId
         self.fullname = fullname
         self.gender = gender
         self.city = city

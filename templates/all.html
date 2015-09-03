@@ -11,6 +11,7 @@
     <tr>
       <th>id</th>
       <th>username</th>
+      <th>facebookId</th>
       <th>fullname</th>
       <th>gender</th>
       <th>city</th>
@@ -27,7 +28,8 @@
     {% for x in entries %}
       <tr class="{% if x.hidden %}danger{% else %}active{% endif %}">
         <td>{{ x.id }}</td>
-        <td class="col-md-3"><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.username }}/picture?width=300&height=300"></a></td>
+        <td class="col-md-3"><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x.facebookId }}/picture?width=300&height=300"></a></td>
+        <td>{{ x.facebookId }}</td>
         <td>{{ x.fullname }}</td>
         <td>{{ x.gender }}</td>
         <td>{{ x.city }}</td>

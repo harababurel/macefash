@@ -169,7 +169,7 @@ def genderHelp():
         print "no more genders to classify (probably)"
         return redirect(url_for('home'))
 
-    pic = SETTINGS['basePic'] % (entry.username, 400, 400)
+    pic = SETTINGS['basePic'] % (entry.facebookId, 400, 400)
 
     total = db.session.query(Person).count()
     classified = total - remaining.count()
@@ -245,7 +245,7 @@ def showTop(gender=None):
     picSizes[1] = 600
     picSizes[2] = 500
 
-    pics = [SETTINGS['basePic'] % (x.username, picSizes[i], picSizes[i]) for i, x in enumerate(entries)]
+    pics = [SETTINGS['basePic'] % (x.facebookId, picSizes[i], picSizes[i]) for i, x in enumerate(entries)]
     grades = [getGradeEquivalent(x.rating) for x in entries]
 
     print "user <%s> accessed the %s top" % (getIP(), ['girls', 'boys'][gender])
