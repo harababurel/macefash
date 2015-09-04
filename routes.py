@@ -17,6 +17,7 @@ from redirectSolver import solveRedirect
 from voteSystem import processVote
 from drawSystem import drawChoices
 from ratingSystem import getGradeEquivalent
+from cacheSystem import getProfilePictureLocation
 from getIP import getIP
 from stringSimilarity import getStringSimilarity
 from basher import sh
@@ -245,7 +246,7 @@ def showTop(gender=None):
     picSizes[1] = 600
     picSizes[2] = 500
 
-    pics = [SETTINGS['basePic'] % (x.facebookId, picSizes[i], picSizes[i]) for i, x in enumerate(entries)]
+    pics = [getProfilePictureLocation(x) for i, x in enumerate(entries)]
     grades = [getGradeEquivalent(x.rating) for x in entries]
 
     print "user <%s> accessed the %s top" % (getIP(), ['girls', 'boys'][gender])

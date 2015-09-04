@@ -10,6 +10,7 @@ from settings import SETTINGS
 from redirectSolver import solveRedirect
 from ratingSystem import getGradeEquivalent
 from facebookIdSolver import getIdFromUsername
+from cacheSystem import getProfilePictureLocation, computePictureFilename
 
 
 def drawChoices(wantedGender):
@@ -26,8 +27,8 @@ def drawChoices(wantedGender):
     # picL = solveRedirect(SETTINGS['basePic'] % (L.username, 500, 500))
     # picR = solveRedirect(SETTINGS['basePic'] % (R.username, 500, 500))
     # ^the solveRedirect method is EXTREMELY slow
-    picL = SETTINGS['basePic'] % (L.facebookId, 500, 500)
-    picR = SETTINGS['basePic'] % (R.facebookId, 500, 500)
+    picL = getProfilePictureLocation(L)
+    picR = getProfilePictureLocation(R)
 
     return {
             'L': L,

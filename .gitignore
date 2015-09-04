@@ -2,3 +2,4 @@ app.db
 settings.py
 *.pyc
 static/graphs
+static/pics
