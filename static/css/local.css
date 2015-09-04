@@ -1,8 +1,12 @@
 @media (max-width: 992px) {
     .girlentry { float: none !important; }
+
+
+    .profile-pic-img > input.img-circle { # on small screens, make pictures a bit smaller
+        width: 60% !important;
+    }
 }
 
-.header { font-size: 32px !important; }
 
 /*
  * Profile image component, taken from http://bootsnipp.com/snippets/featured/profile-picture-with-badge
