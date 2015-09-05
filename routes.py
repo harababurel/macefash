@@ -283,6 +283,13 @@ def showAll(page=None):
 
     shownEntries = db.session.query(Person).filter(and_(firstEntryID <= Person.id, Person.id <= lastEntryID)).all()
 
+    # Some entries may not have a cached picture yet
+    # So it's a good idea to cache them now.
+    # This is slow for a fresh database, but saves
+    # user time in the long run and is a one-time thing
+    for x in shownEntries:
+        getProfilePictureLocation(x)
+
     return render_template(
             'all.html',
             entries=shownEntries,
