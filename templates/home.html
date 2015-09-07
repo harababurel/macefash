@@ -14,7 +14,7 @@
         <div class="col-md-5">
             <div class="profile-pic-container">
                 <div class="grade-container">
-                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeL'] }}<small>/10</small></span>
+                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeL'] }}<small>/10</small>{% if choices['nuevoL'] %}{{ choices['nuevoL'] }}{% endif %}</span>
                 </div>
                 <form action="{{ url_for('home') }}", method="POST" class="profile-pic-img profile-pic-img-{{ currentTheme[0] }}">
                     <input type="hidden" name="winner" value="{{ choices['L'].id }}"></input>
@@ -27,7 +27,7 @@
         <div class="col-md-5">
             <div class="profile-pic-container">
                 <div class="grade-container">
-                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeR'] }}<small>/10</small></span>
+                    <span class="label grade-label grade-label-{{ currentTheme[0] }}">{{ "%.1f" % choices['gradeR'] }}<small>/10</small>{% if choices['nuevoR'] %}{{ choices['nuevoR'] }}{% endif %}</span>
                 </div>
                 <form action="{{ url_for('home') }}", method="POST" class="profile-pic-img profile-pic-img-{{ currentTheme[0] }}">
                     <input type="hidden" name="winner" value="{{ choices['R'].id }}"></input>

@@ -30,11 +30,16 @@ def drawChoices(wantedGender):
     picL = getProfilePictureLocation(L)
     picR = getProfilePictureLocation(R)
 
+    nuevoL = ' (nuev%s)' % ['a', 'o'][L.gender] if '8' in L.school else None
+    nuevoR = ' (nuev%s)' % ['a', 'o'][R.gender] if '8' in R.school else None
+
     return {
             'L': L,
             'R': R,
             'picL': picL,
             'picR': picR,
             'gradeL': getGradeEquivalent(L.rating),
-            'gradeR': getGradeEquivalent(R.rating)
+            'gradeR': getGradeEquivalent(R.rating),
+            'nuevoL': nuevoL,
+            'nuevoR': nuevoR
             }
