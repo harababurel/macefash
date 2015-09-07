@@ -1,3 +1,11 @@
+"""
+    Provides a profile picture cache system.
+    When new pictures are requested, they are saved locally
+    for faster access in the future.
+    The buildEntireCache method can be added as a cron job
+    in order to keep pictures up to date, periodically.
+"""
+
 from app import db
 from models import *
 from settings import SETTINGS
@@ -21,7 +29,7 @@ def saveProfilePicture(person):
 
 def getProfilePictureLocation(person):
     # if the requested picture has been cached, return its location
-    # otherwise, get it and save it
+    # otherwise, get it, save it, return its location
 
     filename = computePictureFilename(person)
 
@@ -33,6 +41,7 @@ def getProfilePictureLocation(person):
 
 
 def buildEntireCache():
+    # this overwrites all profile pictures with their current state
     for i, x in enumerate(db.session.query(Person).all()):
         if i % 100 == 0:
             print "%i/%i" % (i, db.session.query(Person).count())
@@ -40,3 +49,8 @@ def buildEntireCache():
         saveProfilePicture(x)
 
     print "Profile picture cache was built."
+
+def buildMissingCache():
+    # this only updates the missing pictures
+    for x in db.session.query(Person).all():
+        getProfilePictureLocation(x)
