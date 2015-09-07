@@ -90,5 +90,5 @@ def getNewEloRatings(currentPlayer, players, verbose=True):
 
 
 def getGradeEquivalent(rating):
-    grade = 10.0 * (rating - SETTINGS['gradeOneRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeOneRating'])
-    return min(10.0, max(1.0, grade))
+    grade = 10.0 * (rating - SETTINGS['gradeZeroRating']) / (SETTINGS['gradeTenRating'] - SETTINGS['gradeZeroRating'])
+    return min(10.0, max(0.0, grade))
