@@ -29,7 +29,7 @@
             <tr class="{% if x[1].hidden %}danger{% else %}active{% endif %}">
                 <td class="col-md-1">{{ x[1].id }}</td>
                 <td class="col-md-1"><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank">{{ x[1].username }}</a></td>
-                <td class="col-md-4"><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank"><img class="col-md3 img-responsive pull-left thumbnail" src="https://graph.facebook.com/{{ x[1].username }}/picture?width=300&height=300"></a></td>
+                <td class="col-md-4"><a href="http://www.facebook.com/{{ x[1].username }}" target="_blank"><img class="col-md3 img-responsive pull-left thumbnail" src="/static/pics/{{ x[1].facebookId }}.jpg"></a></td>
                 <td class="col-md-1">{% if not x[1].gender %}fe{% endif %}male</td>
                 <td>
                     <div class="col-md-5">
