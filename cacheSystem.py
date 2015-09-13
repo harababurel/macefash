@@ -11,6 +11,7 @@ from models import *
 from settings import SETTINGS
 from redirectSolver import solveRedirect
 import os.path
+import os.makedirs
 import urllib
 
 
@@ -20,6 +21,9 @@ def computePictureFilename(person):
 def saveProfilePicture(person):
     graphURL = SETTINGS['basePic'] % (person.facebookId, 500, 500)
     picURL = solveRedirect(graphURL)
+
+    if not os.path.exists('static/pics'):
+        os.makedirs('static/pics')
 
     try:
         urllib.URLopener().retrieve(picURL, computePictureFilename(person))
