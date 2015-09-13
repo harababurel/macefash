@@ -7,7 +7,7 @@ personal FaceMash clone
 [![The Social Network - Facemash Scene](http://img.youtube.com/vi/VSKoVsHs_Ko/0.jpg)](https://www.youtube.com/watch?v=VSKoVsHs_Ko)
 
 ## Live version
-The platform is ~~currently running [here](http://macefash.ngrok.io/)~~ not functional, because the Facebook API no longer allows queries by username. Will probably find a workaround sometime in the future.
+The platform is currently running [here](http://macefash.ngrok.io/) ~~not functional, because the Facebook API no longer allows queries by username. Will probably find a workaround sometime in the future~~ Workaround successfully found :).
 
 ![vote page on desktop](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote_cyborg_no_ip.png)
 
