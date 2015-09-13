@@ -386,18 +386,6 @@ def login():
     return response
 
 
-@app.errorhandler(404)
-def pageNotFound(e):
-    return render_template(
-            '404.html',
-            totalVotes=getTotalVotes(),
-            uniqueVoters=getUniqueVoters(),
-            currentTheme=getCurrentTheme(),
-            genderCount=getGenderCount(),
-            themes=getThemes()
-            ), 404
-
-
 @app.route('/about')
 # @cache.cached(timeout=50)
 def about():
@@ -473,5 +461,7 @@ def pageNotFound(e):
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
-            themes=getThemes()
+            genderCount=getGenderCount(),
+            themes=getThemes(),
+            userIP=getIP()
             ), 404
