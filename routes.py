@@ -78,11 +78,16 @@ def getCurrentGender():
 
 
 def getGenderCount():
+
+    return { False: '???', True: '???' }
+
+    """
     nonHiddenPersons = db.session.query(Person).filter(Person.hidden == False)
     return {
             False: nonHiddenPersons.filter(Person.gender == False).count(),
             True: nonHiddenPersons.filter(Person.gender == True).count()
             }
+    """
 
 
 def getTotalVotes():
