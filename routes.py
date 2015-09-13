@@ -86,6 +86,10 @@ def getGenderCount():
 
 
 def getTotalVotes():
+
+    return 0 # this is like real fast u kno like O(1) fast
+
+    """
     try:
         totalVotes = db.session.query(Vote).filter(Vote.spam == False).count()
     except:
@@ -96,15 +100,20 @@ def getTotalVotes():
     if 1000000 <= totalVotes:
         return '%.1f mil.' % (totalVotes/1000000.0)
     return '%i' % totalVotes
+    """
 
 
 def getUniqueVoters():
+
+    return 0 # this is like uhm just as fast as the other one
+
+    """
     try:
         uniqueVoters = db.session.query(Vote).distinct(Vote.ip).group_by(Vote.ip).count()
     except:
         uniqueVoters = None
     return uniqueVoters
-
+    """
 
 @app.route('/', methods=['GET', 'POST'])
 # @requiresAuth
