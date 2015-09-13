@@ -10,8 +10,8 @@ from app import db
 from models import *
 from settings import SETTINGS
 from redirectSolver import solveRedirect
+from os import makedirs
 import os.path
-import os.makedirs
 import urllib
 
 
@@ -23,7 +23,7 @@ def saveProfilePicture(person):
     picURL = solveRedirect(graphURL)
 
     if not os.path.exists('static/pics'):
-        os.makedirs('static/pics')
+        makedirs('static/pics')
 
     try:
         urllib.URLopener().retrieve(picURL, computePictureFilename(person))
