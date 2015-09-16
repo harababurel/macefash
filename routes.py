@@ -92,7 +92,7 @@ def getGenderCount():
 
 def getTotalVotes():
 
-    return 0 # this is like real fast u kno like O(1) fast
+    return '~103k' # this is like real fast u kno like O(1) fast
 
     """
     try:
@@ -110,7 +110,7 @@ def getTotalVotes():
 
 def getUniqueVoters():
 
-    return 0 # this is like uhm just as fast as the other one
+    return 'a bunch of' # this is like uhm just as fast as the other one
 
     """
     try:
