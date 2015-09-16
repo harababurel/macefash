@@ -442,10 +442,12 @@ def about():
         deltas[delta]['votes'] = nonSpamVotes.count()
         deltas[delta]['voters'] = nonSpamVotes.distinct(Vote.ip).group_by(Vote.ip).count()
 
+    uptime = sh("uptime -p")[3:]
 
     return render_template(
             'about.html',
             deltas=deltas,
+            uptime=uptime,
             totalVotes=getTotalVotes(),
             uniqueVoters=getUniqueVoters(),
             currentTheme=getCurrentTheme(),
