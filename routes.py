@@ -92,7 +92,7 @@ def getGenderCount():
 
 def getTotalVotes():
 
-    return '~103k' # this is like real fast u kno like O(1) fast
+    return '~106k' # this is like real fast u kno like O(1) fast
 
     """
     try:
