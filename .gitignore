@@ -1,5 +1,6 @@
 app.db
 settings.py
-*.pyc
+**/*.pyc
 static/graphs
 static/pics
+stats.bin

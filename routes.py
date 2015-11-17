@@ -25,6 +25,7 @@ from basher import sh
 from app import app
 from models import *
 import datetime
+import pickle
 
 app.debug = SETTINGS['debug']
 authomatic = Authomatic(SETTINGS, 'secret_string', report_errors=False)
@@ -91,9 +92,6 @@ def getGenderCount():
 
 
 def getTotalVotes():
-
-    return '~112k' # this is like real fast u kno like O(1) fast
-
     """
     try:
         totalVotes = db.session.query(Vote).filter(Vote.spam == False).count()
@@ -106,19 +104,32 @@ def getTotalVotes():
         return '%.1f mil.' % (totalVotes/1000000.0)
     return '%i' % totalVotes
     """
+    try:
+        with open('stats.bin', 'rb') as f:
+            deltas = pickle.load(f)
 
+        totalVotes = deltas['year']['votes']
+    except:
+        totalVotes = None
+
+    return totalVotes
 
 def getUniqueVoters():
-
-    return '~740' # this is like uhm just as fast as the other one
-
     """
     try:
         uniqueVoters = db.session.query(Vote).distinct(Vote.ip).group_by(Vote.ip).count()
     except:
         uniqueVoters = None
-    return uniqueVoters
     """
+    try:
+        with open('stats.bin', 'rb') as f:
+            deltas = pickle.load(f)
+
+        uniqueVoters = deltas['year']['voters']
+    except:
+        uniqueVoters = None
+
+    return uniqueVoters
 
 @app.route('/', methods=['GET', 'POST'])
 # @requiresAuth
@@ -442,6 +453,7 @@ def about():
         deltas[delta]['votes'] = nonSpamVotes.count()
         deltas[delta]['voters'] = nonSpamVotes.distinct(Vote.ip).group_by(Vote.ip).count()
 
+    saveStats(deltas)
     uptime = sh("uptime -p")[3:]
 
     return render_template(
@@ -455,6 +467,19 @@ def about():
             themes=getThemes(),
             userIP=getIP()
             )
+
+def saveStats(deltas):
+    """
+        Method saves some statistics to a binary file,
+        so that the total vote/user count displayed on
+        each page is only computed (updated) when accessing
+        the about page.
+    """
+    try:
+        with open('stats.bin', 'wb') as g:
+            pickle.dump(deltas, g)
+    except:
+        print("Could not save stats.")
 
 
 @app.route('/legal')
