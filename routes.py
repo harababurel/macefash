@@ -108,7 +108,7 @@ def getTotalVotes():
         with open('stats.bin', 'rb') as f:
             deltas = pickle.load(f)
 
-        totalVotes = deltas['year']['votes']
+        totalVotes = deltas['ever']['votes']
     except:
         totalVotes = None
 
@@ -125,7 +125,7 @@ def getUniqueVoters():
         with open('stats.bin', 'rb') as f:
             deltas = pickle.load(f)
 
-        uniqueVoters = deltas['year']['voters']
+        uniqueVoters = deltas['ever']['voters']
     except:
         uniqueVoters = None
 
@@ -435,8 +435,8 @@ def about():
                 'votes': None,
                 'voters': None
                 },
-            'year': {
-                'hours': 24*365,
+            'ever': {
+                'hours': 10**6,
                 'votes': None,
                 'voters': None
                 }
@@ -444,7 +444,7 @@ def about():
 
     now = datetime.datetime.now()
     nonSpamVotes = db.session.query(Vote).filter(Vote.spam == False)
-    for delta in ['year', 'month', 'week', 'day', 'hour']:
+    for delta in ['ever', 'month', 'week', 'day', 'hour']:
         oneDeltaAgo = now - datetime.timedelta(hours = deltas[delta]['hours'])
 
         nonSpamVotes = nonSpamVotes.filter(Vote.when > oneDeltaAgo)

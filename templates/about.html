@@ -37,19 +37,19 @@
                     <th>day</th>
                     <th>week</th>
                     <th>month</th>
-                    <th>year</th>
+                    <th>ever</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><kbd>votes</kbd></td>
-                    {% for delta in ['hour', 'day', 'week', 'month', 'year'] %}
+                    {% for delta in ['hour', 'day', 'week', 'month', 'ever'] %}
                         <td><kbd>{{ deltas[delta].votes }}</kbd></td>
                     {% endfor %}
                 </tr>
                 <tr>
                     <td><kbd>uniqueVisitors</kbd></td>
-                    {% for delta in ['hour', 'day', 'week', 'month', 'year'] %}
+                    {% for delta in ['hour', 'day', 'week', 'month', 'ever'] %}
                         <td><kbd>{{ deltas[delta].voters }}</kbd></td>
                     {% endfor %}
                 </tr>
