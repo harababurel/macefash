@@ -12,14 +12,11 @@
       <th>id</th>
       <th>username</th>
       <th>facebookId</th>
-      <th>fullname</th>
       <th>gender</th>
       <th>city</th>
       <th>school</th>
-      <th>rating</th>
-      <th>maxRating</th>
+      <th>rating (max)</th>
       <th>volatility</th>
-      <th>games</th>
       <th>wins</th>
       <th>hidden</th>
     </tr>
@@ -29,16 +26,13 @@
       <tr class="{% if x.hidden %}danger{% else %}active{% endif %}">
         <td>{{ x.id }}</td>
         <td class="col-md-3"><a href="http://www.facebook.com/{{ x.username }}">{{ x.username }}<br><img class="col-md3 img-responsive pull-left thumbnail" src="/static/pics/{{ x.facebookId }}.jpg"></a></td>
-        <td>{{ x.facebookId }}</td>
-        <td>{{ x.fullname }}</td>
+        <td>{{ x.facebookId }}<br><br>{{ x.fullname }}</td>
         <td>{{ x.gender }}</td>
         <td>{{ x.city }}</td>
         <td>{{ x.school }}</td>
-        <td>{{ x.rating }}</td>
-        <td>{{ x.maxRating }}</td>
-        <td>{{ x.volatility }}</td>
-        <td>{{ x.games }}</td>
-        <td>{{ x.wins }}</td>
+        <td>{{'%.0f'| format(x.rating|float)}} ({{'%.0f'| format(x.maxRating|float)}})</td>
+        <td>{{'%.0f'| format(x.volatility|float)}}</td>
+        <td>{{ x.wins }}/{{ x.games }}</td>
         <td>
             <form action="{{ url_for('flipHidden') }}" method="POST">
                 <input type="hidden" name="id" value="{{ x.id }}"></input>

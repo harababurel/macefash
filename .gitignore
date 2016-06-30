@@ -4,3 +4,5 @@ settings.py
 static/graphs
 static/pics
 stats.bin
+
+static/old-pics
