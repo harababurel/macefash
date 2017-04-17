@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 """
 Creates a sample database with basic entries.
 """
@@ -69,7 +70,7 @@ def generateDatabase():
     db.create_all()
 
     newAdded = 0
-    for grade in range(8, 13):
+    for grade in range(7, 13):
         for letter in 'abcdefghi':
             try:
                 f = open('static/cns/%s' % str(grade)+letter, 'r')
@@ -100,6 +101,7 @@ def generateDatabase():
                     fullname = fullname.replace('\xc3\x89', 'E')
                     fullname = fullname.replace('\xc3\x8e', 'I')
                     fullname = fullname.replace('\xc3\x93', 'O')
+                    fullname = fullname.replace('\xc3\x96', 'O')
                     fullname = fullname.replace('\xc5\x90', 'O')
                     if fullname[-1] == ' ':
                         fullname = fullname[:-1]
@@ -112,7 +114,7 @@ def generateDatabase():
                     if already is None:
                         db.session.add(Person(username=username[0], fullname=fullname, gender=gender, school=school))
                         newAdded += 1
-                        #print "----> added with: gender=%r, school=%s" % (gender, school)
+                        print "----> added with: gender=%r, school=%s" % (gender, school)
                     else:
                         if gender is not None:
                             already.gender = gender
@@ -158,6 +160,8 @@ def setAllIds():
             x.facebookId = x.username
         else:
             facebookId = getIdFromUsername(x.username)
+
+            print "got id = %r" % facebookId
             if facebookId is not None:
                 x.facebookId = facebookId
 
@@ -165,11 +169,8 @@ def setAllIds():
             print "Changed %s's id from %s to %s" % (x.username, oldId, x.facebookId)
             db.session.commit()
 
-
-
 if __name__ == '__main__':
     print "Adding entries..."
     generateDatabase()
     print "Setting IDs to entries..."
     setAllIds()
-
