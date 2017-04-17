@@ -7,7 +7,7 @@ personal FaceMash clone
 [![The Social Network - Facemash Scene](http://img.youtube.com/vi/VSKoVsHs_Ko/0.jpg)](https://www.youtube.com/watch?v=VSKoVsHs_Ko)
 
 ## Live version
-The platform is currently running [here](http://macefash.ngrok.io/).
+The platform is currently running [here](http://macefash.sergiu.ml/).
 
 ![vote page on desktop](https://raw.githubusercontent.com/harababurel/macefash/master/static/img/screens/vote-cyborg-25sep2015.png)
 
