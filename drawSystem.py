@@ -33,6 +33,10 @@ def drawChoices(wantedGender):
     nuevoL = ' (nuev%s)' % ['a', 'o'][L.gender] if '8' in L.school else None
     nuevoR = ' (nuev%s)' % ['a', 'o'][R.gender] if '8' in R.school else None
 
+    # disables showing "nueva"/"nuevo" for boboci
+    nuevoL = None
+    nuevoR = None
+
     return {
             'L': L,
             'R': R,
