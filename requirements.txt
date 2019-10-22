@@ -59,7 +59,7 @@ passlib==1.6.2
 path-and-address==1.0.0
 pep8==1.6.2
 pexpect==3.1
-Pillow==2.3.0
+Pillow==6.2.0
 piston-mini-client==0.7.5
 protobuf==2.5.0
 pycrypto==2.6.1
