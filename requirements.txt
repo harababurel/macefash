@@ -41,7 +41,7 @@ Jinja2==2.7.3
 kaa-base==0.99.1
 kaa-metadata==0.7.8
 lockfile==0.8
-lxml==3.3.3
+lxml==4.6.2
 Mako==0.9.1
 Markdown==2.6.2
 MarkupSafe==0.23
